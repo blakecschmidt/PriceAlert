@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os
 import re
@@ -6,9 +6,116 @@ import json
 import time
 import requests
 import smtplib
+from tkinter import *
 from lxml import html
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+productList = []
+isButtonPressed = False
+
+class Window(Frame):
+
+    def __init__(self):
+        Frame.__init__(self)
+        start = startPage()
+        addProduct = addProductPage()
+        addSite = addSitePage()
+
+        menu = Menu(self)
+        self.master.config(menu=menu)
+
+        file = Menu(menu)
+        file.add_command(label="Add a Product", command=addProduct.lift)
+        file.add_command(label="Exit", command=self.client_exit)
+        menu.add_cascade(label="File", menu=file)
+
+        edit = Menu(menu)
+        edit.add_command(label="Undo")
+        menu.add_cascade(label="Edit", menu=edit)
+
+        start.place(x=0, y=0, relwidth=1, relheight=1)
+        addProduct.place(x=0, y=0, relwidth=1, relheight=1)
+        addSite.place(x=0, y=0, relwidth=1, relheight=1)
+
+        ##### START PAGE #####
+
+        addProductButton = Button(start, text="Add a Product to Track", command=addProduct.lift)
+        addProductButton.place(x=400, y=200)
+
+        ##### ADD PRODUCT PAGE #####
+
+        enterProductName = Label(addProduct, text="Enter the Product Name:")
+        enterProductName.place(x=400, y=150)
+
+        productNameTextBox = Entry(addProduct)
+        productNameTextBox.place(x=400, y=200)
+
+        enterProductPrice = Label(addProduct, text="Enter the price threshold at which you'd like to be alerted:")
+        enterProductPrice.place(x=300, y=300)
+
+        priceTextBox = Entry(addProduct)
+        priceTextBox.place(x=400, y=350)
+
+        submitButton = Button(addProduct, text="Submit", command=addSite.lift)
+        submitButton.place(x=400, y=400)
+
+        ##### ADD SITE PAGE #####
+
+        enterSiteName = Label(addSite, text="Enter the Site Name:")
+        enterSiteName.place(x=400, y=150)
+
+        siteNameTextBox = Entry(addSite)
+        siteNameTextBox.place(x=400, y=200)
+
+        enterBaseURL = Label(addSite, text="Enter the Base URL:")
+        enterBaseURL.place(x=300, y=300)
+
+        baseURLTextBox = Entry(addSite)
+        baseURLTextBox.place(x=400, y=350)
+
+        enterEndURL = Label(addSite, text="Enter the End URL:")
+        enterEndURL.place(x=400, y=400)
+
+        endURLTextBox = Entry(addSite)
+        endURLTextBox.place(x=400, y=450)
+
+        enterXpath = Label(addSite, text="Enter the XPath Selector:")
+        enterXpath.place(x=300, y=500)
+
+        xpathTextBox = Entry(addSite)
+        xpathTextBox.place(x=400, y=550)
+
+        submitButton = Button(addSite, text="Submit", command=start.lift)
+        submitButton.place(x=400, y=600)
+
+        start.show()
+
+    def client_exit(self):
+        sys.exit()
+
+class Page(Frame):
+
+    def __init__(self):
+        Frame.__init__(self)
+
+    def show(self):
+        self.lift()
+
+class startPage(Page):
+
+    def __init__(self):
+        Page.__init__(self)
+
+class addProductPage(Page):
+
+    def __init__(self):
+        Page.__init__(self)
+
+class addSitePage(Page):
+
+    def __init__(self):
+        Page.__init__(self)
 
 class Product:
 
@@ -125,6 +232,16 @@ def get_config(config):
 
 
 def main():
+
+    root = Tk()
+    main = Window()
+    main.pack(side="top", fill="both", expand=True)
+    root.geometry("1000x1000")
+    root.title("Price Alert")
+    root.mainloop()
+
+    print("\033[1mPrice Track A Product\033[0m")
+    print("\nEnter the name of the product you want to track: ")
     sleepTime = 43200
     config = get_config('%s/config.json' % os.path.dirname(os.path.realpath(__file__)))
     items = config['items']
