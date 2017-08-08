@@ -11,22 +11,93 @@ from lxml import html
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-productList = []
-isButtonPressed = False
+class Node(object):
+    def __init__(self, initdata):
+        self.data = initdata
+        self.next = None
+
+    def getData(self):
+        return self.data
+
+    def getNext(self):
+        return self.next
+
+    def setData(self, newData):
+        self.data = newData
+
+    def setNext(self, newNext):
+        self.next = newNext
+
+
+class UnorderedList():
+    def __init__(self):
+        self.head = None
+
+    def isEmpty(self):
+        return self.head == None
+
+    def add(self, item):
+        # add a new Node to the beginning of an existing list
+        temp = Node(item)
+        temp.setNext(self.head)
+        self.head = temp
+
+    def length(self):
+        current = self.head
+        count = 0
+
+        while current != None:
+            count += 1
+            current = current.getNext()
+
+        return count
+
+    def search(self, item):
+        current = self.head
+        found = False
+
+        while current != None and not found:
+            if current.getData().name == item:
+                found = True
+            else:
+                current = current.getNext()
+
+        return current.getData()
+
+    def remove(self, item):
+        current = self.head
+        previous = None
+        found = False
+
+        while not found:
+            if current.getData() == item:
+                found = True
+            else:
+                previous = current
+                current = current.getNext()
+
+        if previous == None:
+            self.head = current.getNext()
+        else:
+            previous.setNext(current.getNext())
+
 
 class Window(Frame):
 
     def __init__(self):
         Frame.__init__(self)
-        start = startPage()
-        addProduct = addProductPage()
-        addSite = addSitePage()
+        self.start = startPage()
+        self.addProduct = addProductPage()
+        self.addSite = addSitePage()
+
+        name = StringVar()
+        price = IntVar()
 
         menu = Menu(self)
         self.master.config(menu=menu)
 
         file = Menu(menu)
-        file.add_command(label="Add a Product", command=addProduct.lift)
+        file.add_command(label="Add a Product", command=self.addProduct.lift)
         file.add_command(label="Exit", command=self.client_exit)
         menu.add_cascade(label="File", menu=file)
 
@@ -34,62 +105,80 @@ class Window(Frame):
         edit.add_command(label="Undo")
         menu.add_cascade(label="Edit", menu=edit)
 
-        start.place(x=0, y=0, relwidth=1, relheight=1)
-        addProduct.place(x=0, y=0, relwidth=1, relheight=1)
-        addSite.place(x=0, y=0, relwidth=1, relheight=1)
+        self.start.place(x=0, y=0, relwidth=1, relheight=1)
+        self.addProduct.place(x=0, y=0, relwidth=1, relheight=1)
+        self.addSite.place(x=0, y=0, relwidth=1, relheight=1)
 
         ##### START PAGE #####
 
-        addProductButton = Button(start, text="Add a Product to Track", command=addProduct.lift)
+        addProductButton = Button(self.start, text="Add a Product to Track", command=self.addProduct.lift)
         addProductButton.place(x=400, y=200)
 
         ##### ADD PRODUCT PAGE #####
 
-        enterProductName = Label(addProduct, text="Enter the Product Name:")
+        enterProductName = Label(self.addProduct, text="Enter the Product Name:")
         enterProductName.place(x=400, y=150)
 
-        productNameTextBox = Entry(addProduct)
-        productNameTextBox.place(x=400, y=200)
+        self.productNameTextBox = Entry(self.addProduct, textvariable=name)
+        self.productNameTextBox.place(x=400, y=200)
 
-        enterProductPrice = Label(addProduct, text="Enter the price threshold at which you'd like to be alerted:")
+        enterProductPrice = Label(self.addProduct, text="Enter the price threshold at which you'd like to be alerted:")
         enterProductPrice.place(x=300, y=300)
 
-        priceTextBox = Entry(addProduct)
-        priceTextBox.place(x=400, y=350)
+        self.priceTextBox = Entry(self.addProduct, textvariable=price)
+        self.priceTextBox.place(x=400, y=350)
 
-        submitButton = Button(addProduct, text="Submit", command=addSite.lift)
-        submitButton.place(x=400, y=400)
+        createProductButton = Button(self.addProduct, text="Create Product",
+                                     command=self.createProduct)
+        createProductButton.place(x=400, y=400)
 
         ##### ADD SITE PAGE #####
 
-        enterSiteName = Label(addSite, text="Enter the Site Name:")
+        enterSiteName = Label(self.addSite, text="Enter the Site Name:")
         enterSiteName.place(x=400, y=150)
 
-        siteNameTextBox = Entry(addSite)
-        siteNameTextBox.place(x=400, y=200)
+        self.siteNameTextBox = Entry(self.addSite)
+        self.siteNameTextBox.place(x=400, y=200)
 
-        enterBaseURL = Label(addSite, text="Enter the Base URL:")
+        enterBaseURL = Label(self.addSite, text="Enter the Base URL:")
         enterBaseURL.place(x=300, y=300)
 
-        baseURLTextBox = Entry(addSite)
-        baseURLTextBox.place(x=400, y=350)
+        self.baseURLTextBox = Entry(self.addSite)
+        self.baseURLTextBox.place(x=400, y=350)
 
-        enterEndURL = Label(addSite, text="Enter the End URL:")
+        enterEndURL = Label(self.addSite, text="Enter the End URL:")
         enterEndURL.place(x=400, y=400)
 
-        endURLTextBox = Entry(addSite)
-        endURLTextBox.place(x=400, y=450)
+        self.endURLTextBox = Entry(self.addSite)
+        self.endURLTextBox.place(x=400, y=450)
 
-        enterXpath = Label(addSite, text="Enter the XPath Selector:")
+        enterXpath = Label(self.addSite, text="Enter the XPath Selector:")
         enterXpath.place(x=300, y=500)
 
-        xpathTextBox = Entry(addSite)
-        xpathTextBox.place(x=400, y=550)
+        self.xpathTextBox = Entry(self.addSite)
+        self.xpathTextBox.place(x=400, y=550)
 
-        submitButton = Button(addSite, text="Submit", command=start.lift)
+        submitButton = Button(self.addSite, text="Submit", command=self.addSiteInfo)
         submitButton.place(x=400, y=600)
 
-        start.show()
+        ##### PRODUCT PAGE #####
+
+        
+
+        self.start.show()
+
+    def createProduct(self):
+        global productList
+        productList.add(Product(self.productNameTextBox.get(), self.priceTextBox.get()))
+        self.addSite.lift()
+
+    def addSiteInfo(self):
+        global productList
+        currentProduct = productList.search(self.productNameTextBox.get())
+        currentProduct.addSite(self.siteNameTextBox.get(), self.baseURLTextBox.get(),
+                               self.endURLTextBox.get(), self.xpathTextBox.get())
+        self.start.lift()
+
 
     def client_exit(self):
         sys.exit()
@@ -232,6 +321,9 @@ def get_config(config):
 
 
 def main():
+
+    global productList
+    productList = UnorderedList()
 
     root = Tk()
     main = Window()
