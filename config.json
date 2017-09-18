@@ -1,8 +1,8 @@
 {
     "email": {
-        "smtp_url": "smtp.gmail.com:587", //insert smtp URL
-        "user": "", //insert email address
-        "password": "" //insert email address password
+        "smtp_url": "smtp.gmail.com:587",
+        "user": "",
+        "password": ""
     },
     "base_url": ["https://www.amazon.com/", "http://www.bestbuy.com", "https://www.dell.com", "https://www.walmart.com", "https://bhphotovideo.com", "http://www.frys.com/", "https://www.newegg.com", "https://huppins.com", "https://www.crutchfield.com"],
     "xpath_selector": [
