@@ -208,9 +208,9 @@ class addSitePage(Page):
 
 class Product:
 
-    smtp_url = "smtp.gmail.com:587"
-    user = "blakecschmidt@gmail.com"
-    password = "rfoqxeyfhgknrjlz"
+    smtp_url = ""
+    user = ""
+    password = ""
 
     def __init__(self, name, price):
         self.name = name
