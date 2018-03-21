@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5229fc9-c8e4-42ef-a396-ab409de75da5" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/home.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/style.css" />
-      <change beforePath="$PROJECT_DIR$/.idea/PriceAlert.iml" afterPath="$PROJECT_DIR$/.idea/PriceAlert.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="f5229fc9-c8e4-42ef-a396-ab409de75da5" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +14,8 @@
       <file leaf-file-name="PriceAlert.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PriceAlert.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="725">
-              <caret line="235" column="13" lean-forward="false" selection-start-line="235" selection-start-column="13" selection-end-line="235" selection-end-column="13" />
+            <state relative-caret-position="64">
+              <caret line="275" column="21" lean-forward="true" selection-start-line="275" selection-start-column="21" selection-end-line="275" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -50,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/config.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="9" column="35" lean-forward="false" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+              <caret line="9" column="34" lean-forward="true" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -252,15 +247,15 @@
       <option name="presentableId" value="Default" />
       <updated>1499873703023</updated>
       <workItem from="1521651658216" duration="14000" />
-      <workItem from="1521651791768" duration="383000" />
+      <workItem from="1521651791768" duration="1689000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="397000" />
+    <option name="totallyTimeSpent" value="1703000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -489,26 +484,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.json">
+    <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="35" lean-forward="false" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="725">
-          <caret line="235" column="13" lean-forward="false" selection-start-line="235" selection-start-column="13" selection-end-line="235" selection-end-column="13" />
+        <state relative-caret-position="64">
+          <caret line="275" column="21" lean-forward="true" selection-start-line="275" selection-start-column="21" selection-end-line="275" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
+    <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="9" column="34" lean-forward="true" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
           <folding />
         </state>
       </provider>
