@@ -13,14 +13,21 @@ body {
 .header img {
     display: inline;
     position: relative;
-    top: 35px;
+    top: 17px;
     left: 20px;
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+    border: 1px solid red;
 }
 
 .header h1 {
     text-align: center;
     font-family: Georgia;
     color: white;
+    position: relative;
+    top: -85px;
+    z-index: 1;
 }
 
 .navBar {
@@ -110,6 +117,20 @@ p.contact {
 
 .about p{
     text-align: justify;
+}
+
+.footer {
+    border-top: 4px solid dodgerblue;
+    position: absolute;
+    top: 635px;
+    height: 120px;
+    width: 100%;
+}
+
+.footer p {
+    text-align: center;
+    position: relative;
+    top: 45px;
 }
 
 /*Bootstrap columns*/
