@@ -1,0 +1,68 @@
+* {
+    border: 1px red solid;
+}
+body {
+    background-color: whitesmoke;
+    margin: 0px;
+}
+
+.header {
+    background-color: dodgerblue;
+    position: absolute;
+    height: 120px;
+    width: 100%;
+}
+
+#logo {
+    position: relative;
+    left: 20px;
+    top: 40px;
+}
+
+.header h1 {
+    text-align: center;
+    width: 200px;
+    margin: 0 auto;
+}
+
+#login {
+    color: white;
+    width: 75px;
+    text-align: center;
+    position: relative;
+    top: 40px;
+    left: 500px;
+}
+
+#signup {
+    color: white;
+    width: 75px;
+    text-align: center;
+}
+
+.navBar {
+    position: absolute;
+    top: 120px;
+}
+
+navBar ul {
+    list-style-type: none;
+    padding: 30px 0;
+    background-color: dodgerblue;
+}
+
+.navBar li {
+    display: inline;
+}
+
+.navBar li a {
+    text-decoration: none;
+    color: white;
+    background-color: dodgerblue;
+    padding: 10px 20px;
+}
+
+.navBar li a:hover {
+    background-color: white;
+    color: dodgerblue;
+}
