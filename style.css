@@ -88,32 +88,44 @@ p.contact {
 .pageStrt{
     position: absolute;
     top: 160px;
-    left: 3%;
+    margin: 0 auto;
 }
 
 .about{
     border: 4px solid dodgerblue;
     margin-bottom: 5px;
+    margin: 0 auto;
+    width: 75%;
+    padding: 8px;
 }
 
 .dashboard {
     border: 4px solid dodgerblue;
     margin-top: 5px;
     margin-bottom: 5px;
+    margin: 0 auto;
+    width: 75%;
+    padding: 8px;
+}
+
+.vidCon{
+    width: 77%;
 }
 
 .video {
     border: 4px solid dodgerblue;
     margin-top: 5px;
     margin-right: 5px;
-    right: .5%
+    width: 55%;
+    float: left;
 }
 
 .vidText {
     border: 4px solid dodgerblue;
     margin-top: 5px;
     margin-left: 5px;
-    left: 6.5%;
+    width: 35%;
+    float: right;
 }
 
 .about h3{
@@ -124,10 +136,14 @@ p.contact {
     text-align: justify;
 }
 
+.dashboard h3{
+    text-align: center;
+}
+
 .footer {
     border-top: 4px solid dodgerblue;
     position: absolute;
-    top: 635px;
+    top: 685px;
     height: 120px;
     width: 100%;
     background-color: dodgerblue;
