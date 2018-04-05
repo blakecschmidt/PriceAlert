@@ -1,277 +1,14 @@
 #!/usr/bin/python3
 
 import os
-import re
 import json
-import time
-import requests
 import smtplib
-from tkinter import *
-from lxml import html
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import requests
+from bs4 import BeautifulSoup
 
-class Node(object):
-    def __init__(self, initdata):
-        self.data = initdata
-        self.next = None
-
-    def getData(self):
-        return self.data
-
-    def getNext(self):
-        return self.next
-
-    def setData(self, newData):
-        self.data = newData
-
-    def setNext(self, newNext):
-        self.next = newNext
-
-
-class UnorderedList():
-    def __init__(self):
-        self.head = None
-
-    def isEmpty(self):
-        return self.head == None
-
-    def add(self, item):
-        # add a new Node to the beginning of an existing list
-        temp = Node(item)
-        temp.setNext(self.head)
-        self.head = temp
-
-    def length(self):
-        current = self.head
-        count = 0
-
-        while current != None:
-            count += 1
-            current = current.getNext()
-
-        return count
-
-    def search(self, item):
-        current = self.head
-        found = False
-
-        while current != None and not found:
-            if current.getData().name == item:
-                found = True
-            else:
-                current = current.getNext()
-
-        return current.getData()
-
-    def remove(self, item):
-        current = self.head
-        previous = None
-        found = False
-
-        while not found:
-            if current.getData() == item:
-                found = True
-            else:
-                previous = current
-                current = current.getNext()
-
-        if previous == None:
-            self.head = current.getNext()
-        else:
-            previous.setNext(current.getNext())
-
-
-class Window(Frame):
-
-    def __init__(self):
-        Frame.__init__(self)
-        self.start = startPage()
-        self.addProduct = addProductPage()
-        self.addSite = addSitePage()
-
-        name = StringVar()
-        price = IntVar()
-
-        menu = Menu(self)
-        self.master.config(menu=menu)
-
-        file = Menu(menu)
-        file.add_command(label="Add a Product", command=self.addProduct.lift)
-        file.add_command(label="Exit", command=self.client_exit)
-        menu.add_cascade(label="File", menu=file)
-
-        edit = Menu(menu)
-        edit.add_command(label="Undo")
-        menu.add_cascade(label="Edit", menu=edit)
-
-        self.start.place(x=0, y=0, relwidth=1, relheight=1)
-        self.addProduct.place(x=0, y=0, relwidth=1, relheight=1)
-        self.addSite.place(x=0, y=0, relwidth=1, relheight=1)
-
-        ##### START PAGE #####
-
-        addProductButton = Button(self.start, text="Add a Product to Track", command=self.addProduct.lift)
-        addProductButton.place(x=400, y=200)
-
-        ##### ADD PRODUCT PAGE #####
-
-        enterProductName = Label(self.addProduct, text="Enter the Product Name:")
-        enterProductName.place(x=400, y=150)
-
-        self.productNameTextBox = Entry(self.addProduct, textvariable=name)
-        self.productNameTextBox.place(x=400, y=200)
-
-        enterProductPrice = Label(self.addProduct, text="Enter the price threshold at which you'd like to be alerted:")
-        enterProductPrice.place(x=300, y=300)
-
-        self.priceTextBox = Entry(self.addProduct, textvariable=price)
-        self.priceTextBox.place(x=400, y=350)
-
-        createProductButton = Button(self.addProduct, text="Create Product",
-                                     command=self.createProduct)
-        createProductButton.place(x=400, y=400)
-
-        ##### ADD SITE PAGE #####
-
-        enterSiteName = Label(self.addSite, text="Enter the Site Name:")
-        enterSiteName.place(x=400, y=150)
-
-        self.siteNameTextBox = Entry(self.addSite)
-        self.siteNameTextBox.place(x=400, y=200)
-
-        enterBaseURL = Label(self.addSite, text="Enter the Base URL:")
-        enterBaseURL.place(x=300, y=300)
-
-        self.baseURLTextBox = Entry(self.addSite)
-        self.baseURLTextBox.place(x=400, y=350)
-
-        enterEndURL = Label(self.addSite, text="Enter the End URL:")
-        enterEndURL.place(x=400, y=400)
-
-        self.endURLTextBox = Entry(self.addSite)
-        self.endURLTextBox.place(x=400, y=450)
-
-        enterXpath = Label(self.addSite, text="Enter the XPath Selector:")
-        enterXpath.place(x=300, y=500)
-
-        self.xpathTextBox = Entry(self.addSite)
-        self.xpathTextBox.place(x=400, y=550)
-
-        submitButton = Button(self.addSite, text="Submit", command=self.addSiteInfo)
-        submitButton.place(x=400, y=600)
-
-        ##### PRODUCT PAGE #####
-
-        
-
-        self.start.show()
-
-    def createProduct(self):
-        global productList
-        productList.add(Product(self.productNameTextBox.get(), self.priceTextBox.get()))
-        self.addSite.lift()
-
-    def addSiteInfo(self):
-        global productList
-        currentProduct = productList.search(self.productNameTextBox.get())
-        currentProduct.addSite(self.siteNameTextBox.get(), self.baseURLTextBox.get(),
-                               self.endURLTextBox.get(), self.xpathTextBox.get())
-        self.start.lift()
-
-
-    def client_exit(self):
-        sys.exit()
-
-class Page(Frame):
-
-    def __init__(self):
-        Frame.__init__(self)
-
-    def show(self):
-        self.lift()
-
-class startPage(Page):
-
-    def __init__(self):
-        Page.__init__(self)
-
-class addProductPage(Page):
-
-    def __init__(self):
-        Page.__init__(self)
-
-class addSitePage(Page):
-
-    def __init__(self):
-        Page.__init__(self)
-
-class Product:
-
-    smtp_url = ""
-    user = ""
-    password = ""
-
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
-        self.sleepTime = 43200
-        self.siteNames = []
-        self.baseURLs = []
-        self.endURLs = []
-        self.xpathSelectors = []
-
-    def setPrice(self, price):
-        set.price = price
-
-    def setSleepTime(self, sleepTime):
-        self.sleepTime = sleepTime
-
-    def changeName(self, name):
-        self.name = name
-
-    def getSize(self):
-        return len(self.siteNames)
-
-    def addSite(self, siteName, baseURL, endURL, xpathSelector):
-        self.addSiteName(siteName)
-        self.addBaseURL(baseURL)
-        self.addEndURL(endURL)
-        self.addXpathSelector(xpathSelector)
-
-    def addSiteName(self, siteName):
-        self.siteNames.append(siteName)
-
-    def addBaseURL(self, baseURL):
-        self.baseURLs.append(baseURL)
-
-    def addEndURL(self, endURL):
-        self.endURLs.append(endURL)
-
-    def addXpathSelector(self, xpathSelector):
-        self.xpathSelectors.append(xpathSelector)
-
-    def deleteSite(self, siteName):
-        idx = self.siteNames.index(siteName)
-        self.deleteSiteName(idx)
-        self.deleteBaseURL(idx)
-        self.deleteEndURL(idx)
-        self.deleteXpathSelector(idx)
-
-    def deleteSiteName(self, idx):
-        del self.siteNames[idx]
-
-    def deleteBaseURL(self, idx):
-        del self.baseURLs[idx]
-
-    def deleteEndURL(self, idx):
-        del self.endURLs[idx]
-
-    def deleteXpathSelector(self, idx):
-        del self.xpathSelectors[idx]
-
-
-def send_email(product, site, price, url, email_info):
+def sendEmail(product, site, price, url, email_info):
     try:
         s = smtplib.SMTP(email_info['smtp_url'])
         s.starttls()
@@ -291,51 +28,44 @@ def send_email(product, site, price, url, email_info):
         s.sendmail(email_info['user'], email_info['user'], msg.as_string())
         print('Message has been sent.')
 
-
-def get_price(url, selector):
+def getPrice(url, site):
     r = requests.get(url, headers={
         'User-Agent':
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'
     })
-
     r.raise_for_status()
-    tree = html.fromstring(r.text)
 
-    try:
-        # extract the price from the string
-        if selector[-1] == "]":
-            price_string = re.findall('\d+.\d+', tree.xpath(selector)[0].text)[0]
-        else:
-            price_string = re.findall('\d+.\d+', tree.xpath(selector)[0])[0]
+    soup = BeautifulSoup(r.text, 'html.parser')
 
-        print('\033[1m' + price_string + '\033[0m')
-        return float(price_string.replace(",", ""))
+    if site == "amazon":
+        soup = soup.find(id="priceblock_ourprice")
 
-    except (IndexError, TypeError):
-        print('\033[91m' + "ERROR:" + '\033[0m' + " Didn\'t find the \'price\' element, trying again later...")
+        priceElements = []
+        for tag in soup:
+            tag = tag.string.strip()
+            if not tag.isdigit():
+                continue
+            priceElements.append(tag)
+
+        price = float(priceElements[0] + "." + priceElements[1])
+    elif site == "bestbuy":
+        soup = soup.div['pb-purchase-price']
+        print(soup)
 
 
-def get_config(config):
+    #print(price)
+
+def getConfig(config):
     with open(config, 'r') as f:
         return json.loads(f.read())
 
 
 def main():
 
-    global productList
-    productList = UnorderedList()
+    getPrice("https://www.bestbuy.com/site/apple-ipad-latest-model-with-wi-fi-32gb-space-gray/5201300.p?skuId=5201300", "bestbuy")
 
-    root = Tk()
-    main = Window()
-    main.pack(side="top", fill="both", expand=True)
-    root.geometry("1000x1000")
-    root.title("Price Alert")
-    root.mainloop()
-
-    print("\033[1mPrice Track A Product\033[0m")
-    print("\nEnter the name of the product you want to track: ")
-    sleepTime = 43200
-    config = get_config('%s/config.json' % os.path.dirname(os.path.realpath(__file__)))
+    '''sleepTime = 43200
+    config = getConfig('%s/config.json' % os.path.dirname(os.path.realpath(__file__)))
     items = config['items']
     base_urls = config['base_url']
     xpath_selectors = config['xpath_selector']
@@ -355,12 +85,12 @@ def main():
                 continue
             elif price <= items[idx][3]:
                 print('Price is %s!! Trying to send email.' % price)
-                send_email(product, site, price, item_page, config['email'])
+                sendEmail(product, site, price, item_page, config['email'])
             else:
                 print('Price is %s. Ignoring...' % price)
             print("\n")
 
         print('Sleeping for %d seconds' % sleepTime)
-        time.sleep(sleepTime)
+        time.sleep(sleepTime)'''
 
 main()

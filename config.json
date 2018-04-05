@@ -1,12 +1,12 @@
 {
     "email": {
         "smtp_url": "smtp.gmail.com:587",
-        "user": "",
+        "user": "pricealertnotify@gmail.com",
         "password": ""
     },
     "base_url": ["https://www.amazon.com/", "http://www.bestbuy.com", "https://www.dell.com", "https://www.walmart.com", "https://bhphotovideo.com", "http://www.frys.com/", "https://www.newegg.com", "https://huppins.com", "https://www.crutchfield.com"],
-    "xpath_selector": [
-        "//*[@id='priceblock_ourprice']",
+    "jsFunction": [
+        "var priceElements = document.getElementById('priceblock_ourprice'); var prices = []; for (var i = 0; i < 3; i++) { prices.push(priceElements.children[i].innerHTML); } var price = prices[1] + '.' + prices[2]; return price;",
         "//*[@id='schemaorg-offer-price']/@content",
         "//*[@data-testid='sharedPSPDellPrice']",
         "//*[@itemprop='price']",
@@ -15,16 +15,5 @@
         "//*[@itemprop='price']/@content",
         "//*[@itemprop='price']",
         "//*[@itemprop='price']/@content"
-    ],
-    "items": [
-        ["55\" LG C7", "Amazon", "LG-Electronics-OLED65C7P-65-Inch-Ultra/dp/B01MZF7WCT", 1800],
-        ["55\" LG C7", "Best Buy", "/site/lg-55-class-54-6-diag--oled-2160p-smart-4k-ultra-hd-tv-with-high-dynamic-range-silver/5763400.p", 1800],
-        ["55\" LG C7", "Dell", "/en-us/shop/lg-55-inch-4k-ultra-hd-smart-tv-oled55c7p-uhd-tv/apd/a9613645", 1800],
-        ["55\" LG C7", "Walmart", "/ip/LG-55-Class-C7-Series-4K-Ultra-HD-Smart-OLED-TV-2160p-60Hz-OLED55C7P/55556484", 1800],
-        ["55\" LG C7", "B&H", "/c/product/1312116-REG/", 1800],
-        ["55\" LG C7", "Frys", "product/9104898", 1800],
-        ["55\" LG C7", "Newegg", "/Product/Product.aspx?Item=N82E16889007131", 1800],
-        ["55\" LG C7", "Huppins", "/lg-oled55c7p-55-inch-uhd-4k-smart-oled-television", 1800],
-        ["55\" LG C7", "Crutchfield", "/p_68955C7/LG-OLED55C7P.html", 1800]
     ]
 }
