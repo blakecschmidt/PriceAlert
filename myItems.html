@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Items</title>
+    <link rel = "stylesheet" type = "text/css" href = "./style.css" media = "all">
+</head>
+<body>
+<header>
+    <div class="header">
+        <img id="logo" src="logo.png" alt="Price Alert Logo">
+        <h1>Price Alert</h1>
+    </div>
+
+    <div class="navBar">
+        <ul>
+            <li><a id="home" href="home.html">Home</a></li>
+            <li><a href="myItems.html">My Items</a></li>
+            <li><a href="redirect.html">My Profile</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="redirect.html">Log In</a></li>
+        </ul>
+    </div>
+</header>
+
+    <div class="myItemStrt">
+        <table class="myItem">
+            <tr>
+                <th>{{Item Name Link to Item Page}}</th>
+                <th>Current Price</th>
+                <th>Link</th>
+            </tr>
+            <tr>
+                <th>{{Retailer's Website 1}}</th>
+                <td>{{Item's current price at Retailer 1}}</td>
+                <td>{{direct link to item on Retailer's site}}</td>
+            </tr>
+            <tr>
+                <th>{{Retailer's Website 2}}</th>
+                <td>{{Item's current price at Retailer 2}}</td>
+                <td>{{direct link to item on Retailer's site}}</td>
+            </tr>
+            <tr>
+                <th>{{Retailer's Website N}}</th>
+                <td>{{Item's current price at Retailer N}}</td>
+                <td>{{direct link to item on Retailer's site}}</td>
+            </tr>
+            <tr>
+                <td>*This page will dynamically show a list of tables w/ relevant info for each item the user is tracking</td>
+                <td>**text in {{}} represent information grabbed from the backend</td>
+                <td>***See HTML comments for Database Design</td>
+            </tr>
+        </table>
+        <table class="myItem">
+            <tr>
+                <th><a href="redirect.html">Xbox One Example</a></th>
+                <th> Current Price</th>
+                <th>Link</th>
+            </tr>
+            <tr>
+                <th>www.amazon.com</th>
+                <td>244.95</td>
+                <td><a href="https://www.amazon.com/gp/product/B01MTJA6EV/ref=s9_acsd_top_hd_bw_b73oV9v_c_x_w?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-1&pf_rd_r=ZGBJR6VCF6H9TDAA9MP5&pf_rd_r=ZGBJR6VCF6H9TDAA9MP5&pf_rd_t=101&pf_rd_p=55c5b6f0-ca79-4c95-9c0e-1b275fcd2237&pf_rd_p=55c5b6f0-ca79-4c95-9c0e-1b275fcd2237&pf_rd_i=6469295011">Direct Link</a></td>
+            </tr>
+            <tr>
+                <th>www.bestbuy.com</th>
+                <td>229.99</td>
+                <td><a href="https://www.bestbuy.com/site/microsoft-refurbished-xbox-one-s-500gb-console-with-4k-ultra-hd-blu-ray-white/6087902.p?skuId=6087902">Direct Link</a></td>
+            </tr>
+        </table>
+        <!--Database Design
+        User Table
+        UserID
+        UserName/Email
+        ItemID
+
+        Item Table
+        ItemID
+        ItemName
+        Notify Price (the alert threshold)
+        BridgeID
+
+        Retailer Table
+        RetailerID
+        WebsiteName
+        BridgeID
+
+        Item + Retail Bridge
+        BridgeID
+        ItemID
+        RetailerID
+        ProductURL
+        -->
+    </div>
+
+<footer>
+    <div class="footer">
+        <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
+    </div>
+</footer>
+</body>
+</html>
