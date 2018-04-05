@@ -56,6 +56,33 @@ body {
     margin: -3px;
     border-left: 1px solid white;
 }
+.myProfileSideBar {
+    position: relative;
+    left: 100px;
+}
+.myProfileSideBar ul {
+    list-style-type: none;
+}
+
+.myProfileSideBar li {
+    font-family: Verdana;
+}
+
+.myProfileSideBar li button {
+    text-decoration: none;
+    color: white;
+    background-color: dodgerblue;
+    padding: 15px 30px;
+    margin: 0px;
+    border-left: 1px solid white;
+    width: 150px;
+}
+
+.myProfileSideBar li button:hover {
+    background-color: white;
+    color: dodgerblue;
+}
+
 
 #home {
     border-left: none;
@@ -214,6 +241,19 @@ p.contact {
     margin-bottom: 5px;
     margin: 0 auto;
     width: 75%;
+    padding: 8px;
+}
+
+.myProfile {
+    position: relative;
+    top: -150px;
+    left: 300px;
+    border: 4px solid dodgerblue;
+    width: 1000px;
+    height: 400px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin: 0 auto;
     padding: 8px;
 }
 
