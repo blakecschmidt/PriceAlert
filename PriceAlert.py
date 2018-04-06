@@ -29,6 +29,7 @@ def sendEmail(product, site, price, url, email_info):
         print('Message has been sent.')
 
 def getPrice(url, site):
+
     r = requests.get(url, headers={
         'User-Agent':
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'
@@ -48,12 +49,32 @@ def getPrice(url, site):
             priceElements.append(tag)
 
         price = float(priceElements[0] + "." + priceElements[1])
+
     elif site == "bestbuy":
-        soup = soup.div['pb-purchase-price']
-        print(soup)
+        soup = soup.find(attrs={"class": "pb-purchase-price"})
+        soup = soup.contents[0].contents
+        price = float(soup[2])
 
+    elif site == "dell":
+        soup = soup.find(attrs={"data-testid": "sharedPSPDellPrice"})
+        price = float(soup.string.strip().replace("$", "").replace(",", ""))
 
-    #print(price)
+    elif site == "walmart":
+        soup = soup.find(attrs={"class": "Price-group"})
+        priceElements = []
+
+        for tag in soup:
+            tag = tag.string.strip()
+            priceElements.append(tag)
+
+        price = float(priceElements[1] + priceElements[2] + priceElements[3])
+
+    elif site == "target":
+        soup = soup.find(attrs={"data-test": "product-price"})
+        soup = soup.contents[0].contents[0].replace("$", "")
+        price = float(soup)
+
+    return price
 
 def getConfig(config):
     with open(config, 'r') as f:
@@ -62,7 +83,7 @@ def getConfig(config):
 
 def main():
 
-    getPrice("https://www.bestbuy.com/site/apple-ipad-latest-model-with-wi-fi-32gb-space-gray/5201300.p?skuId=5201300", "bestbuy")
+    getPrice("https://www.newegg.com/Product/Product.aspx?Item=N82E16824116657", "newegg")
 
     '''sleepTime = 43200
     config = getConfig('%s/config.json' % os.path.dirname(os.path.realpath(__file__)))
