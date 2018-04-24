@@ -26,7 +26,7 @@
 
 <?php
 
-if (isset($_POST) && $_POST["itemName"] != "" && $_POST["alertPrice"] != "" && sizeof($_POST["retailer"]) > 0) {
+if (isset($_POST) && ($_POST["all"] == "true" || sizeof($_POST["retailer"]) > 0)) {
     delete();
 } else {
     deleteForm();
@@ -51,41 +51,46 @@ function delete()
     $table_itu = "itemToUser";
     $table_itr = "itemToRetailer";
 
-    $username = $_COOKIE["username"];
-    $itemName = $_POST["itemName"];
-    $alertPrice = $_POST["alertPrice"];
+    $allIDs = $_POST["allIDs"];
     $retailers = $_POST["retailer"];
+    $itemIDsToDelete = array();
 
-    foreach ($retailers as $retailer) {
-        if ($retailer == "Amazon") {
-            $url = $_POST["amazonURL"];
-        } elseif ($retailer == "Best Buy") {
-            $url = $_POST["bestbuyURL"];
-        } elseif ($retailer == "Dell") {
-            $url = $_POST["dellURL"];
-        } elseif ($retailer == "Walmart") {
-            $url = $_POST["walmartURL"];
-        } elseif ($retailer == "Target") {
-            $url = $_POST["targetURL"];
+    if ($_POST["all"] == "true") {
+        $itemIDsToDelete = $allIDs;
+    } else {
+        foreach ($retailers as $retailer) {
+            if ($retailer == "Amazon") {
+                $itemIDsToDelete[] = $_POST["amazonID"];
+            } elseif ($retailer == "Best Buy") {
+                $itemIDsToDelete[] = $_POST["bestbuyID"];
+            } elseif ($retailer == "Dell") {
+                $itemIDsToDelete[] = $_POST["dellID"];
+            } elseif ($retailer == "Walmart") {
+                $itemIDsToDelete[] = $_POST["walmartID"];
+            } elseif ($retailer == "Target") {
+                $itemIDsToDelete[] = $_POST["targetID"];
+            }
         }
+    }
 
-        $stmt1 = mysqli_prepare($connect, "INSERT INTO $table_item (itemName, alertPrice) VALUES (?, ?)");
-        mysqli_stmt_bind_param($stmt1, 'ss', $itemName, $alertPrice);
+    foreach ($itemIDsToDelete as $id) {
+        $stmt1 = mysqli_prepare($connect, "DELETE FROM $table_item WHERE itemID = (?)");
+        mysqli_stmt_bind_param($stmt1, 's', $id);
         mysqli_stmt_execute($stmt1);
         mysqli_stmt_close($stmt1);
 
-        $stmt2 = mysqli_prepare($connect, "INSERT INTO $table_itu (username) VALUES (?)");
-        mysqli_stmt_bind_param($stmt2, 's', $username);
+        $stmt2 = mysqli_prepare($connect, "DELETE FROM $table_itu WHERE itemID = (?)");
+        mysqli_stmt_bind_param($stmt2, 's', $id);
         mysqli_stmt_execute($stmt2);
         mysqli_stmt_close($stmt2);
 
-        $stmt3 = mysqli_prepare($connect, "INSERT INTO $table_itr (retailer, url, currentPrice) VALUES (?, ?, ?)");
-        mysqli_stmt_bind_param($stmt3, 'sss', $retailer, $url, NULL);
+        $stmt3 = mysqli_prepare($connect, "DELETE FROM $table_itr WHERE itemID = (?)");
+        mysqli_stmt_bind_param($stmt3, 's', $id);
         mysqli_stmt_execute($stmt3);
         mysqli_stmt_close($stmt3);
     }
 
-    print "<p>Your item has now been added.</p>";
+    print "<p>The items you selected have now been deleted.</p>";
 
     mysqli_close($connect);
 
@@ -110,7 +115,7 @@ function deleteForm()
     $itemName = "";
     $username = $_COOKIE["username"];
 
-    $stmt = mysqli_prepare($connect, "SELECT retailer, url FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? AND itemName = ?");
+    $stmt = mysqli_prepare($connect, "SELECT retailer, url, itemID FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? AND itemName = ?");
     mysqli_stmt_bind_param($stmt, 'ss', $username, $itemName);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
@@ -119,10 +124,12 @@ function deleteForm()
 
     $retailers = array();
     $urls = array();
+    $itemIDs = array();
 
     while ($row = $result->fetch_row()) {
         $retailers[] = $row[0];
         $urls[] = $row[1];
+        $itemIDs[] = $row[2];
     }
     $result->free();
 
@@ -143,39 +150,42 @@ function deleteForm()
   
 FORM;
 
-    $amazonURL = "";
-    $bestbuyURL = "";
-    $dellURL = "";
-    $walmartURL = "";
-    $targetURL = "";
-
-    $amazonTag ="<tr><td><input type='checkbox' name='retailer[]' value='Amazon' id='amazon'></td><td><label for='amazon'> Amazon</label></td><td><input type='text' name='amazonURL' id='amazonURL' placeholder=$amazonURL readonly></td></tr>";
-    $bestbuyTag ="<tr><td><input type='checkbox' name='retailer[]' value='Best Buy' id='bestbuy'></td><td><label for='bestbuy'> Best Buy</label></td><td><input type='text' name='bestbuyURL' id='bestbuyURL' placeholder=$bestbuyURL readonly></td></tr>";
-    $dellTag ="<tr><td><input type='checkbox' name='retailer[]' value='Dell' id='dell'></td><td><label for='dell'> Dell</label></td><td><input type='text' name='dellURL' id='dellURL' placeholder=$dellURL readonly></td></tr>";
-    $walmartTag ="<tr><td><input type='checkbox' name='retailer[]' value='Walmart' id='walmart'></td><td><label for='walmart'> Walmart</label></td><td><input type='text' name='walmartURL' id='walmartURL' placeholder=$walmartURL readonly></td></tr>";
-    $targetTag ="<tr><td><input type='checkbox' name='retailer[]' value='Target' id='target'></td><td><label for='target'> Target</label></td><td><input type='text' name='targetURL' id='targetURL' placeholder=$targetURL readonly></td></tr>";
-
     for ($i = 0; $i < sizeof($retailers); $i++) {
         if ($retailers[$i] == "Amazon") {
             $amazonURL = $urls[$i];
+            $amazonID = $itemIDs[$i];
+            $amazonTag ="<tr><td><input type='checkbox' name='retailer[]' value='Amazon' id='amazon'></td><td><label for='amazon'> Amazon</label></td><td><input type='text' name='amazonURL' id='amazonURL' placeholder=$amazonURL readonly></td></tr>";
             print $amazonTag;
+            print "<input type='hidden' name='amazonID' id='amazonID' value=$amazonID>";
         } elseif ($retailers[$i] == "Best Buy") {
             $bestbuyURL = $urls[$i];
+            $bestbuyID = $itemIDs[$i];
+            $bestbuyTag ="<tr><td><input type='checkbox' name='retailer[]' value='Best Buy' id='bestbuy'></td><td><label for='bestbuy'> Best Buy</label></td><td><input type='text' name='bestbuyURL' id='bestbuyURL' placeholder=$bestbuyURL readonly></td></tr>";
             print $bestbuyTag;
+            print "<input type='hidden' name='bestbuyID' id='bestbuyID' value=$bestbuyID>";
         } elseif ($retailers[$i] == "Dell") {
             $dellURL = $urls[$i];
+            $dellID = $itemIDs[$i];
+            $dellTag ="<tr><td><input type='checkbox' name='retailer[]' value='Dell' id='dell'></td><td><label for='dell'> Dell</label></td><td><input type='text' name='dellURL' id='dellURL' placeholder=$dellURL readonly></td></tr>";
             print $dellTag;
+            print "<input type='hidden' name='dellID' id='dellID' value=$dellID>";
         } elseif ($retailers[$i] == "Walmart") {
             $walmartURL = $urls[$i];
+            $walmartID = $itemIDs[$i];
+            $walmartTag ="<tr><td><input type='checkbox' name='retailer[]' value='Walmart' id='walmart'></td><td><label for='walmart'> Walmart</label></td><td><input type='text' name='walmartURL' id='walmartURL' placeholder=$walmartURL readonly></td></tr>";
             print $walmartTag;
+            print "<input type='hidden' name='walmartID' id='walmartID' value=$walmartID>";
         } elseif ($retailers[$i] == "Target") {
             $targetURL = $urls[$i];
+            $targetID = $itemIDs[$i];
+            $targetTag ="<tr><td><input type='checkbox' name='retailer[]' value='Target' id='target'></td><td><label for='target'> Target</label></td><td><input type='text' name='targetURL' id='targetURL' placeholder=$targetURL readonly></td></tr>";
             print $targetTag;
+            print "<input type='hidden' name='targetID' id='targetID' value=$targetID>";
         }
     }
 
     print <<<FORM
-
+    <input type="hidden" name="allIDs" id="allIDs" value=$itemIDs>
     <tr><td><input type="submit" value="Submit"></td></tr>
     <tr><td><input type="reset" value="Clear"></td></tr>
 </table>
