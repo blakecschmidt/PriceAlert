@@ -9,6 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def sendEmail(product, site, price, url, email_info):
+
     try:
         s = smtplib.SMTP(email_info['smtp_url'])
         s.starttls()
@@ -83,7 +84,7 @@ def getConfig(config):
 
 def main():
 
-    getPrice("https://www.newegg.com/Product/Product.aspx?Item=N82E16824116657", "newegg")
+    print(getPrice("https://www.bestbuy.com/site/nintendo-switch-32gb-console-neon-red-neon-blue-joy-con/5670100.p?skuId=5670100", "bestbuy"))
 
     '''sleepTime = 43200
     config = getConfig('%s/config.json' % os.path.dirname(os.path.realpath(__file__)))
