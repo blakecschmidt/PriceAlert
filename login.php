@@ -31,8 +31,6 @@ elseif ($_POST['userName'] != "" && $_POST['passWord'] != ""){
     verifyLogin();
 }
 
-
-
 function verifyLogin(){
     $host = "spring-2018.cs.utexas.edu";
     $user = "bcs2363";
@@ -74,7 +72,6 @@ function verifyLogin(){
         print("<a href='login.php'>Return to login form.</a>");
     }
 }
-
 
 function loginForm()
 {
