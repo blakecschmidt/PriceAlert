@@ -70,7 +70,7 @@ function insert()
         }
 
         $stmt1 = mysqli_prepare($connect, "INSERT INTO $table_item (itemName, alertPrice) VALUES (?, ?)");
-        mysqli_stmt_bind_param($stmt1, 'ss', $itemName, $alertPrice);
+        mysqli_stmt_bind_param($stmt1, 'sd', $itemName, $alertPrice);
         mysqli_stmt_execute($stmt1);
         mysqli_stmt_close($stmt1);
 
@@ -80,7 +80,7 @@ function insert()
         mysqli_stmt_close($stmt2);
 
         $stmt3 = mysqli_prepare($connect, "INSERT INTO $table_itr (retailer, url, currentPrice) VALUES (?, ?, ?)");
-        mysqli_stmt_bind_param($stmt3, 'sss', $retailer, $url, NULL);
+        mysqli_stmt_bind_param($stmt3, 'ssd', $retailer, $url, NULL);
         mysqli_stmt_execute($stmt3);
         mysqli_stmt_close($stmt3);
     }

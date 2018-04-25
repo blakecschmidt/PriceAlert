@@ -66,9 +66,9 @@ function edit()
     $itemRetailersAndURLsToInsert = array();
 
     if ($_POST["alertPrice"] != "" && $_POST["alertPrice"] != 0) {
-        $alertPrice = $_POST["alertPrice"];
+        $alertPrice = (float) $_POST["alertPrice"];
     } else {
-        $alertPrice = $_POST["alertPriceCurrent"];
+        $alertPrice = (float) $_POST["alertPriceCurrent"];
     }
 
     for ($i = 0; $i < sizeof($retailers); $i++) {
@@ -97,7 +97,7 @@ function edit()
 
     foreach ($itemIDsAndURLsToEdit as $edit) {
         $stmt1 = mysqli_prepare($connect, "UPDATE $table_item SET alertPrice = (?) WHERE itemID = (?)");
-        mysqli_stmt_bind_param($stmt1, 'ss', $alertPrice, $edit[0]);
+        mysqli_stmt_bind_param($stmt1, 'ds', $alertPrice, $edit[0]);
         mysqli_stmt_execute($stmt1);
         mysqli_stmt_close($stmt1);
 
@@ -109,7 +109,7 @@ function edit()
 
     foreach ($itemRetailersAndURLsToInsert as $insert) {
         $stmt1 = mysqli_prepare($connect, "INSERT INTO $table_item (itemName, alertPrice) VALUES (?, ?)");
-        mysqli_stmt_bind_param($stmt1, 'ss', $itemName, $alertPrice);
+        mysqli_stmt_bind_param($stmt1, 'sd', $itemName, $alertPrice);
         mysqli_stmt_execute($stmt1);
         mysqli_stmt_close($stmt1);
 
@@ -119,7 +119,7 @@ function edit()
         mysqli_stmt_close($stmt2);
 
         $stmt3 = mysqli_prepare($connect, "INSERT INTO $table_itr (retailer, url, currentPrice) VALUES (?, ?, ?)");
-        mysqli_stmt_bind_param($stmt3, 'sss', $insert[0], $insert[1], NULL);
+        mysqli_stmt_bind_param($stmt3, 'ssd', $insert[0], $insert[1], NULL);
         mysqli_stmt_execute($stmt3);
         mysqli_stmt_close($stmt3);
     }
@@ -146,7 +146,7 @@ function editForm()
         die("mysqli_connect failed: " . mysqli_connect_error());
     }
 
-    $itemName = "";
+    $itemName = $_POST["itemName"];
     $username = $_COOKIE["username"];
 
     $stmt = mysqli_prepare($connect, "SELECT retailer, url, itemID, alertPrice FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? AND itemName = ?");
@@ -165,7 +165,7 @@ function editForm()
         $retailers[] = $row[0];
         $urls[] = $row[1];
         $itemIDs[] = $row[2];
-        $alertPrices[] = $row[3];
+        $alertPrices[] = (float) $row[3];
     }
     $result->free();
 

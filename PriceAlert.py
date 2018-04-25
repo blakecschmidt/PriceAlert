@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import os
-import json
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -11,16 +10,16 @@ from bs4 import BeautifulSoup
 def sendEmail(itemName, retailers, prices, urls, senderEmail, destEmail):
 
     try:
-        s = smtplib.SMTP(senderEmail['smtp_url'])
+        s = smtplib.SMTP(senderEmail[2])
         s.starttls()
-        s.login(senderEmail['user'], senderEmail['password'])
+        s.login(senderEmail[0], senderEmail[1])
     except smtplib.SMTPAuthenticationError:
         print('Failed to login')
     else:
         print('Logged in! Composing message..')
         msg = MIMEMultipart('alternative')
         msg['Subject'] = "Price Alert Notification"
-        msg['From'] = senderEmail['user']
+        msg['From'] = senderEmail[0]
         msg['To'] = destEmail
 
         msgText = "We have detected that the price of one of your items has dropped below your Price Alert threshold on one or more sites!\n\nItem Name: " + itemName + "\n\n"
@@ -31,7 +30,7 @@ def sendEmail(itemName, retailers, prices, urls, senderEmail, destEmail):
         msgText += "Thanks for using Price Alert!"
         part = MIMEText(msgText, 'plain')
         msg.attach(part)
-        s.sendmail(senderEmail['user'], destEmail, msg.as_string())
+        s.sendmail(senderEmail[0], destEmail, msg.as_string())
         print('Message has been sent.')
 
 def getPrice(url, site):
@@ -44,7 +43,7 @@ def getPrice(url, site):
 
     soup = BeautifulSoup(r.text, 'html.parser')
 
-    if site == "amazon":
+    if site == "Amazon":
         soup = soup.find(id="priceblock_ourprice")
 
         priceElements = []
@@ -56,16 +55,16 @@ def getPrice(url, site):
 
         price = float(priceElements[0] + "." + priceElements[1])
 
-    elif site == "bestbuy":
+    elif site == "Best Buy":
         soup = soup.find(attrs={"class": "pb-purchase-price"})
         soup = soup.contents[0].contents
         price = float(soup[2])
 
-    elif site == "dell":
+    elif site == "Dell":
         soup = soup.find(attrs={"data-testid": "sharedPSPDellPrice"})
         price = float(soup.string.strip().replace("$", "").replace(",", ""))
 
-    elif site == "walmart":
+    elif site == "Walmart":
         soup = soup.find(attrs={"class": "Price-group"})
         priceElements = []
 
@@ -75,22 +74,21 @@ def getPrice(url, site):
 
         price = float(priceElements[1] + priceElements[2] + priceElements[3])
 
-    elif site == "target":
+    elif site == "Target":
         soup = soup.find(attrs={"data-test": "product-price"})
         soup = soup.contents[0].contents[0].replace("$", "")
         price = float(soup)
 
+    else:
+        price = None
+
     return price
-
-def getConfig(config):
-    with open(config, 'r') as f:
-        return json.loads(f.read())
-
 
 def main():
 
-    print(getPrice("https://www.bestbuy.com/site/nintendo-switch-32gb-console-neon-red-neon-blue-joy-con/5670100.p?skuId=5670100", "bestbuy"))
+    print(getPrice("https://www.bestbuy.com/site/nintendo-switch-32gb-console-neon-red-neon-blue-joy-con/5670100.p?skuId=5670100", "Best Buy"))
 
+    #sendEmail("Xbox", ["Amazon", "Dell", "Best Buy"], ["400.00", "425.23", "500"], ["https://www.amazon.com/Xbox-One-X-1TB-Console/dp/B074WPGYRF/ref=sr_1_3?s=videogames&ie=UTF8&qid=1524680613&sr=1-3&keywords=xbox+one+x", "url", "url"], ["pricealertnotify@gmail.com", "3qKL^yoc*,Aq6ZmH$rDn", "smtp.gmail.com:587"], "blakecschmidt@gmail.com")
     '''sleepTime = 43200
     config = getConfig('%s/config.json' % os.path.dirname(os.path.realpath(__file__)))
     items = config['items']

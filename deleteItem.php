@@ -112,7 +112,7 @@ function deleteForm()
         die("mysqli_connect failed: " . mysqli_connect_error());
     }
 
-    $itemName = "";
+    $itemName = $_POST["itemName"];
     $username = $_COOKIE["username"];
 
     $stmt = mysqli_prepare($connect, "SELECT retailer, url, itemID FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? AND itemName = ?");
