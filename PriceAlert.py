@@ -8,25 +8,30 @@ from email.mime.text import MIMEText
 import requests
 from bs4 import BeautifulSoup
 
-def sendEmail(product, site, price, url, email_info):
+def sendEmail(itemName, retailers, prices, urls, senderEmail, destEmail):
 
     try:
-        s = smtplib.SMTP(email_info['smtp_url'])
+        s = smtplib.SMTP(senderEmail['smtp_url'])
         s.starttls()
-        s.login(email_info['user'], email_info['password'])
+        s.login(senderEmail['user'], senderEmail['password'])
     except smtplib.SMTPAuthenticationError:
         print('Failed to login')
     else:
         print('Logged in! Composing message..')
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = 'Price Alert - %s' % price
-        msg['From'] = email_info['user']
-        msg['To'] = email_info['user']
-        text = 'The price for %s on %s is currently %s !! URL to salepage: %s' % (product, site,
-            price, url)
-        part = MIMEText(text, 'plain')
+        msg['Subject'] = "Price Alert Notification"
+        msg['From'] = senderEmail['user']
+        msg['To'] = destEmail
+
+        msgText = "We have detected that the price of one of your items has dropped below your Price Alert threshold on one or more sites!\n\nItem Name: " + itemName + "\n\n"
+
+        for idx in range(0, len(retailers)):
+            msgText += "Site: " + retailers[idx] + "\nPrice: " + prices[idx] + "\nURL: " + urls[idx] + "\n\n"
+
+        msgText += "Thanks for using Price Alert!"
+        part = MIMEText(msgText, 'plain')
         msg.attach(part)
-        s.sendmail(email_info['user'], email_info['user'], msg.as_string())
+        s.sendmail(senderEmail['user'], destEmail, msg.as_string())
         print('Message has been sent.')
 
 def getPrice(url, site):
