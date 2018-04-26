@@ -24,9 +24,10 @@ while ($row = $result->fetch_row()) {
 }
 $result->free();
 
+//For each user
 foreach ($usernames as $user) {
     $stmt_items = mysqli_prepare($connect, "SELECT itemID, itemName FROM itemToUser JOIN Item ON itemToUser.itemID = Item.itemID WHERE username = (?)");
-    mysqli_stmt_bind_param($stmt, 's', $user);
+    mysqli_stmt_bind_param($stmt_items, 's', $user);
     mysqli_stmt_execute($stmt_items);
     mysqli_stmt_close($stmt_items);
 
@@ -43,13 +44,28 @@ foreach ($usernames as $user) {
     }
     $result->free();
 
+    $stmt_email = mysqli_prepare($connect, "SELECT email FROM User WHERE username = (?)");
+    mysqli_stmt_bind_param($stmt_email, 's', $user);
+    mysqli_stmt_execute($stmt_email);
+    mysqli_stmt_close($stmt_email);
+
+    $result = mysqli_query($connect, $stmt_items);
+    $row = $result->fetch_row();
+    $email = $row[0];
+    $result->free();
+
+    //For each set of itemIDs matched to each item of the user
     foreach ($itemNameAndIDs as $itemName => $nameIDs) {
         $itemIDsToNotify = array();
+        //itemName, retailers, prices, urls, senderEmail, destEmail
+        $emailInfo = array($itemName, array(), array(), array(), array("pricealertnotify@gmail.com", '3qKL^yoc*,Aq6ZmH$rDn', "smtp.gmail.com:587"), $email);
+        //For each ID in set of IDs
         foreach ($nameIDs as $id) {
-            $stmt_items = mysqli_prepare($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE itemID = $id");
-            mysqli_stmt_bind_param($stmt, 's', $user);
-            mysqli_stmt_execute($stmt_items);
-            mysqli_stmt_close($stmt_items);
+            $stmt_id = mysqli_prepare($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE itemID = $id");
+            mysqli_stmt_bind_param($stmt_id, 's', $user);
+            mysqli_stmt_execute($stmt_id);
+            mysqli_stmt_close($stmt_id);
+            $result = mysqli_query($connect, $stmt_id);
 
             $row = $result->fetch_row();
             $itemName = $row[0];
@@ -57,6 +73,7 @@ foreach ($usernames as $user) {
             $retailer = $row[2];
             $url = $row[3];
             $currentPrice = (float) $row[4];
+            $result->free();
 
             $getPriceArgs = $url . " " . $retailer;
             $price = (float) system("python3 getPrice.py " . $getPriceArgs , $retval);
@@ -69,13 +86,16 @@ foreach ($usernames as $user) {
             }
 
             if ($price < $alertPrice) {
-                
+                $emailInfo[1][] = $retailer;
+                $emailInfo[2][] = $price;
+                $emailInfo[3][] = $url;
             }
         }
+
+        $sendEmailArgs = $emailInfo[0] . " " . $emailInfo[1] . " " . $emailInfo[2] . " " . $emailInfo[3] . " " . $emailInfo[4] . " " . $emailInfo[5];
+        $sendEmail = system("python3 sendEmail.py " . $sendEmailArgs , $retval);
     }
 }
-
-
 
 mysqli_close($connect);
 

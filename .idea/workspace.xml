@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eeb9b157-e921-4b07-9b77-8555f00aef90" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/getPrice.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/priceCheck.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sendEmail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PriceAlert.py" beforeDir="false" afterPath="$PROJECT_DIR$/PriceAlert.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deleteItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/deleteItem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/editItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/editItem.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sqlqueries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlqueries.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/priceCheck.php" beforeDir="false" afterPath="$PROJECT_DIR$/priceCheck.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,16 +20,19 @@
       <file leaf-file-name="PriceAlert.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PriceAlert.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+            <state relative-caret-position="1350">
+              <caret line="90" column="293" lean-forward="true" selection-start-line="90" selection-start-column="293" selection-end-line="90" selection-end-column="311" />
+              <folding>
+                <element signature="e#20#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sendEmail.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sendEmail.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sendEmail.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
+            <state relative-caret-position="480">
               <caret line="32" column="89" selection-start-line="32" selection-start-column="89" selection-end-line="32" selection-end-column="89" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -45,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="getPrice.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="getPrice.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/getPrice.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-420">
+            <state relative-caret-position="30">
               <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="10" />
             </state>
           </provider>
@@ -239,6 +235,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
           <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -253,6 +252,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1755">
           <caret line="117" lean-forward="true" selection-start-line="117" selection-end-line="117" />
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -267,6 +269,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
           <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -299,7 +304,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/home.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -333,6 +344,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4125">
           <caret line="275" column="21" lean-forward="true" selection-start-line="275" selection-start-column="21" selection-end-line="275" selection-end-column="21" />
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -365,7 +379,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -375,7 +395,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -385,7 +411,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -395,7 +427,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -405,7 +443,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -415,7 +459,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -425,7 +475,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -435,7 +491,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -445,7 +507,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -505,27 +573,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sendEmail.py">
+    <entry file="file://$PROJECT_DIR$/getPrice.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="32" column="89" selection-start-line="32" selection-start-column="89" selection-end-line="32" selection-end-column="89" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PriceAlert.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        <state relative-caret-position="1350">
+          <caret line="90" column="293" lean-forward="true" selection-start-line="90" selection-start-column="293" selection-end-line="90" selection-end-column="311" />
+          <folding>
+            <element signature="e#20#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/getPrice.py">
+    <entry file="file://$PROJECT_DIR$/sendEmail.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-420">
-          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="10" />
+        <state relative-caret-position="480">
+          <caret line="32" column="89" selection-start-line="32" selection-start-column="89" selection-end-line="32" selection-end-column="89" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
