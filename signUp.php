@@ -56,11 +56,18 @@ function verifySignUp(){
     $passwordValid = false;
     $emailValid = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-    if (sizeof($username) >= 10 && sizeof($username) <= 20){
+    $result = mysqli_query($connect,
+        "SELECT * from $table_u WHERE username = $username");
+    $row = $result->fetch_row();
+    if ($row[0] == $username){
+        $userValid = false;
+    }
+    elseif (sizeof($username) >= 10 && sizeof($username) <= 20){
         if (preg_match("/^[a-zA-Z]+[a-zA-Z0-9]*$/", $username)){
             $userValid = true;
         }
     }
+    $result ->free();
     if (sizeof($_POST['passWord']) >=6){
         if (preg_match("/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,}))/", $_POST['passWord'])){
             if($password == $repeatPassword){
@@ -75,6 +82,7 @@ function verifySignUp(){
     else{
         $result = mysqli_query($connect,
             "INSERT into $table_u (username, email, password) VALUES('" . $username . "', '" . $email . "', '" . $password . "')");
+        $result ->free();
         print("Successfully registered for Price Alert");
         print("<a href='login.php'>Login</a>");
     }
