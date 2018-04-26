@@ -24,7 +24,14 @@
 </header>
 <?php
 
-
+if((isset($_POST['userName'])&& $_POST['userName'] != '')
+    &&(isset($_POST['passWord']) && $_POST['passWord'] != '')
+    &&(isset($_POST['email']) && $_POST['email'] != '')){
+    verifySignUp();
+}
+else{
+    signUpForm();
+}
 
 function verifySignUp(){
     $host = "spring-2018.cs.utexas.edu";
@@ -42,29 +49,32 @@ function verifySignUp(){
     //TODO double check table name is correct
     $table_u = "Users";
     $username = $_POST['userName'];
+    $email = $_POST['email'];
     $password = crypt($_POST['passWord']);
     $repeatPassword = crypt($_POST['repeatPassWord']);
     $userValid = false;
     $passwordValid = false;
+    $emailValid = filter_var($email, FILTER_VALIDATE_EMAIL);
 
     if (sizeof($username) >= 10 && sizeof($username) <= 20){
-        if (preg_match("/^[a-zA-Z].[a-zA-Z0-9]*$/", $username)){
+        if (preg_match("/^[a-zA-Z]+[a-zA-Z0-9]*$/", $username)){
             $userValid = true;
         }
     }
-    //TODO fix password checking regex, might need to do some javascript there
-    if (sizeof($password) >=6 && sizeof($password)<=10){
-        if (preg_match("//", $password)){
+    if (sizeof($_POST['passWord']) >=6){
+        if (preg_match("/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,}))/", $_POST['passWord'])){
             if($password == $repeatPassword){
                 $passwordValid = true;
             }
         }
     }
-    if ($userValid == false || $passwordValid == false){
+    if ($userValid == false || $passwordValid == false || $emailValid == false){
         print("username or password invalid.");
         print("<a href='signUp.php'>Return to sign up form</a>");
     }
     else{
+        $result = mysqli_query($connect,
+            "INSERT into $table_u (username, email, password) VALUES('" . $username . "', '" . $email . "', '" . $password . "')");
         print("Successfully registered for Price Alert");
         print("<a href='login.php'>Login</a>");
     }
@@ -81,6 +91,12 @@ function signUpForm(){
                         </tr>
                         <tr>
                             <td><input type = "text" name = "userName" id = "userName"></td>
+                        </tr>
+                        <tr>
+                            <td><label for = "email">Email:</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type = "email" name = "email" id = "email"></td>
                         </tr>
                         <tr>
                             <td><label for = "passWord">Password:</label></td>
@@ -110,7 +126,7 @@ function signUpForm(){
                     </ul>
                     Password requirements:
                     <ul>
-                        <li>6 through 10 characters in length</li>
+                        <li>Must be at least 6 characters in length</li>
                         <li>Only letters and digits</li>
                         <li>Must have one lower case letter</li>
                         <li>Must have one upper case letter</li>

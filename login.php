@@ -59,7 +59,7 @@ function verifyLogin(){
             session_start();
             $_SESSION['user'] = $userName;
             if(sizeof($_POST['stay']) == 1){
-                $_COOKIE['loggedIn'] = true;
+                $_COOKIE['username'] = $userName;
             }
         }
         else{
