@@ -34,6 +34,7 @@ else{
 }
 
 function verifySignUp(){
+    print("function called");
     $host = "spring-2018.cs.utexas.edu";
     $user = "bcs2363";
     $pwd = "4fPUF78Nu~";
@@ -65,19 +66,26 @@ function verifySignUp(){
     $row = $result->fetch_row();
     if ($row[0] == $username){
         $userValid = false;
+        print("user name striaght false");
     }
     elseif (sizeof($username) >= 10 && sizeof($username) <= 20){
         if (preg_match("/^[a-zA-Z]+[a-zA-Z0-9]*$/", $username)){
             $userValid = true;
+            print("user name checked true");
         }
+        print("user name checked false");
     }
     $result ->free();
     if (sizeof($_POST['passWord']) >= 6){
         if (preg_match('/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/', $_POST['passWord'])){
             if($password == $repeatPassword){
                 $passwordValid = true;
+                print("password checked true");
             }
+            print("password did not pass regex");
         }
+        print("password did not pass size");
+
     }
     if ($userValid == false || $passwordValid == false || $emailValid == false){
         print("<p>Username or password invalid<p>");
@@ -117,13 +125,13 @@ function signUpForm(){
                             <td><label for = "passWord">Password:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "passWord" id = "passWord"></td>
+                            <td><input type = "password" name = "passWord" id = "passWord"></td>
                         </tr>
                         <tr>
                             <td><label for = "repeatPassWord">Repeat Password:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "repeatPassWord" id = "repeatPassWord"></td>
+                            <td><input type = "password" name = "repeatPassWord" id = "repeatPassWord"></td>
                         </tr>
                         <tr>
                             <td><input type = "submit" value = "Sign Up"><input type = "reset" value = "Reset"></td>

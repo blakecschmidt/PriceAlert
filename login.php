@@ -103,7 +103,7 @@ function loginForm()
 						<td>Password:</td>
 					</tr>
 					<tr>
-						<td><input type = "text" name = "passWord"></td>
+						<td><input type = "password" name = "passWord"></td>
 					</tr>
 					<tr>
 						<td><input type = "submit" value = "Log In"><input type = "reset" value = "Reset"></td>
