@@ -57,15 +57,14 @@ function verifySignUp(){
     $passwordValid = false;
     $emailValid = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-    $stmt1 = mysqli_prepare($connect, "SELECT * from $table_u WHERE username = (?)");
-    mysqli_stmt_bind_param($stmt1, 's', $username);
-    mysqli_stmt_execute($stmt1);
-    mysqli_stmt_close($stmt1);
+    $stmt = "SELECT username from $table_u WHERE username = '" . $username . "'";
 
-    $result = mysqli_query($connect, $stmt1);
-    $row = $result->fetch_row();
-    print($row);
-    if ($row[0] == $username){
+    $result = mysqli_query($connect, $stmt);
+    while ($row = $result->fetch_row()) {
+        $userDB = $row[0];
+    }
+    print($userDB);
+    if ($userDB == $username){
         $userValid = false;
         print("user name striaght false");
     }
