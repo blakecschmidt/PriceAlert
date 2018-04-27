@@ -66,14 +66,13 @@ function verifySignUp(){
     while ($row = $result->fetch_row()) {
         $userDB = $row[0];
     }
-    print("UserDB: " . $userDB);
+
     if ($userDB != "none"){
         $userValid = false;
     }
     elseif (strlen($username) >= 10 && strlen($username) <= 20){
         if (preg_match("/^[a-zA-Z]+[a-zA-Z0-9]*$/", $username)){
             $userValid = true;
-        } else {
         }
     }
     $result ->free();

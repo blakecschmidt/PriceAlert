@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add An Item</title>
+    <title>Login</title>
     <link rel = "stylesheet" type = "text/css" href = "./style.css" media = "all">
 </head>
 <body>
@@ -50,38 +50,39 @@ function verifyLogin(){
         die("mysqli_connect failed: " . mysqli_connect_error());
     }
 
-    //TODO double check table name is correct
     $table_u = "User";
 
     $userName = $_POST['userName'];
-    $password = crypt($_POST['passWord']);
+    $password = $_POST['passWord'];
     $stay = $_POST['stay'];
+    $userDB = "none";
+    $passDB = "none";
 
-    $stmt1 = mysqli_prepare($connect, "SELECT * from $table_u WHERE username = (?)");
-    mysqli_stmt_bind_param($stmt1, 's', $username);
-    mysqli_stmt_execute($stmt1);
-    mysqli_stmt_close($stmt1);
+    $stmt = "SELECT * from $table_u WHERE username = '" . $userName . "'";
 
-    $result = mysqli_query($connect, $stmt1);
-    $row = $result->fetch_row();
-    if(sizeof($row) == 3){
-        if ($password == $row[2]){
+    $result = mysqli_query($connect, $stmt);
+    while ($row = $result->fetch_row()) {
+        $userDB = $row[0];
+        $passDB = $row[2];
+    }
+
+    if($userDB != "none"){
+        if (crypt($password, $passDB) == $passDB) {
             session_start();
             $_SESSION['username'] = $userName;
-            if(sizeof($_POST['stay']) == 1){
+            if(sizeof($stay) == 1){
                 setcookie("username", $userName);
             }
-            print("Logged in.");
             redirect("home.html");
         }
         else{
-            print("<b>Username or password incorrect.</b>");
-            print("<a href='login.php'>Return to login form.</a>");
+            print("<b class='pageStrt'>Username or password incorrect.</b>");
+            print("<a class='pageStrt' href='login.php'>Return to login form.</a>");
         }
     }
     else{
-        print("Username or password incorrect.");
-        print("<a href='login.php'>Return to login form.</a>");
+        print("<b class='pageStrt'>Username or password incorrect.</b>");
+        print("<a class='pageStrt' href='login.php'>Return to login form.</a>");
     }
     mysqli_close($connect);
 }
