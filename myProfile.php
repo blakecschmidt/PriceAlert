@@ -57,7 +57,7 @@
 
     $result = mysqli_query($connect, "SELECT password from $table_u WHERE UserName = '". $userName ."' ");
     $row = $result->fetch_row();
-    return $row;
+    return $row[0];
     }
 
 
@@ -78,7 +78,7 @@
                             <td><label for = "email">Email:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "email" id = "email" value = "$row[0]"></td>
+                            <td><input type = "text" name = "email" id = "email" value = "$personalInfo"></td>
                         </tr>
                         <tr>
                             <td><label for = "name">Name:</label></td>
@@ -113,7 +113,73 @@ PERSINFO;
         var settingsButton = document.getElementById("settings");
 
         personalInfoButton.onclick = function() {
-            div.innerHTML = "<h1>Personal Info</h1><p>This is where personal information such as username and email will be displayed</p>"
+            div.innerHTML = "<?php
+    function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+    }
+
+    function pullPersonalInfo($userName){
+    $host = "spring-2018.cs.utexas.edu";
+    $user = "bcs2363";
+    $pwd = "4fPUF78Nu~";
+    $dbs = "cs329e_bcs2363";
+    $port = "3306";
+
+    $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
+
+    if (empty($connect)) {
+        die("mysqli_connect failed: " . mysqli_connect_error());
+    }
+
+    //TODO double check table name is correct
+    $table_u = "Users";
+
+    $result = mysqli_query($connect, "SELECT password from $table_u WHERE UserName = '". $userName ."' ");
+    $row = $result->fetch_row();
+    return $row[0];
+    }
+
+
+    if (isset($_SESSION['user']) || isset($_COOKIE['username'])) {
+        if (isset($_SESSION['user'])) {
+        $userName = $_SESSION['user'];
+        }
+        else {
+        $userName = $_COOKIE['username'];
+        }
+
+        $personalInfo = pullPersonalInfo($userName);
+        print <<<PERSINFO
+         <h1>Personal Info</h1>
+                <form action = "" method = "post">
+                    <table>
+                        <tr>
+                            <td><label for = "email">Email:</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type = "text" name = "email" id = "email" value = "$personalInfo"></td>
+                        </tr>
+                        <tr>
+                            <td><label for = "name">Name:</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type = "name" name = "name" id = "name"></td>
+                        </tr>
+                        <tr>
+                            <td><input type = "submit" value = "Save"><input type = "reset" value = "Reset"></td>
+                        </tr>
+                    </table>
+                </form>
+PERSINFO;
+
+    }
+    else {
+    redirect("logIn.php");
+}
+?>"
         }
 
         securityButton.onclick = function() {
