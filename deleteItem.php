@@ -94,7 +94,7 @@ function delete()
 
     mysqli_close($connect);
 
-    print "<a href='myItems.html'>Back to My Items</a>";
+    print "<a href='myItems.php'>Back to My Items</a>";
 
 }
 
