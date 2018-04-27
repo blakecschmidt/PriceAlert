@@ -76,7 +76,7 @@ function verifyLogin(){
 function loginForm()
 {
     print <<<loginForm
-    <div class="pageStrt">
+    <div class="wrapper">
     	<div class="logIn">
 			<form action = "" method = "post">
 				<table>
@@ -100,7 +100,7 @@ function loginForm()
                     </tr>
 				</table>
 			</form>
-			<p><a href="signUp.html">Don't have an account? Sign up here.</a></p>
+			<p><a href="signUp.php">Don't have an account? Sign up here.</a></p>
 		</div>
 	</div>
 loginForm;

@@ -90,7 +90,7 @@ function verifySignUp(){
 
 function signUpForm(){
     print <<<signUp
-        <div class="pageStrt">
+        <div class="wrapper">
             <div class="signUp">
                 <form action = "userSignUp.php" method = "post">
                     <table>
@@ -123,15 +123,17 @@ function signUpForm(){
                         </tr>
                     </table>
                 </form>
-                <p><a href="logIn.html">Already have an account? Log in here.</a></p>
+                <p><a href="logIn.php">Already have an account? Log in here.</a></p>
             </div>
-            <div class="signUpInstructions">
+            <div class="signUpInstructions2">
                 User name requirements:
                     <ul>
                         <li>10 through 20 characters in length</li>
                         <li>Only letters and digits</li>
                         <li>Cannot begin with a digit</li>
                     </ul>
+            </div>
+            <div class="signUpInstructions1">
                     Password requirements:
                     <ul>
                         <li>Must be at least 6 characters in length</li>
