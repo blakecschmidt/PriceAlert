@@ -137,7 +137,7 @@ function signUpForm(){
                     Password requirements:
                     <ul>
                         <li>Must be at least 6 characters in length</li>
-                        <li>Only letters and digits</li>
+                        <li>Only letters, digits, and special characters</li>
                         <li>Must have one lower case letter</li>
                         <li>Must have one upper case letter</li>
                         <li>Must have one digit</li>
