@@ -47,49 +47,47 @@ function verifySignUp(){
         die("mysqli_connect failed: " . mysqli_connect_error());
     }
 
-    //TODO double check table name is correct
     $table_u = "User";
     $username = $_POST['userName'];
     $email = $_POST['email'];
     $password = crypt($_POST['passWord']);
-    $repeatPassword = crypt($_POST['repeatPassWord']);
     $userValid = false;
     $passwordValid = false;
-    $emailValid = filter_var($email, FILTER_VALIDATE_EMAIL);
+    $emailCheck = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if ($emailCheck == $email) {
+        $emailValid = true;
+    } else {
+        $emailValid = false;
+    }
 
     $stmt = "SELECT username from $table_u WHERE username = '" . $username . "'";
-
+    $userDB = "none";
     $result = mysqli_query($connect, $stmt);
     while ($row = $result->fetch_row()) {
         $userDB = $row[0];
     }
-    print($userDB);
-    if ($userDB == $username){
+    print("UserDB: " . $userDB);
+    if ($userDB != "none"){
         $userValid = false;
-        print("user name striaght false");
     }
-    elseif (sizeof($username) >= 10 && sizeof($username) <= 20){
+    elseif (strlen($username) >= 10 && strlen($username) <= 20){
         if (preg_match("/^[a-zA-Z]+[a-zA-Z0-9]*$/", $username)){
             $userValid = true;
-            print("user name checked true");
+        } else {
         }
-        print("user name checked false");
     }
     $result ->free();
-    if (sizeof($_POST['passWord']) >= 6){
+    if (strlen($_POST['passWord']) >= 6){
         if (preg_match('/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/', $_POST['passWord'])){
-            if($password == $repeatPassword){
+            if($_POST['passWord'] == $_POST['repeatPassWord']){
                 $passwordValid = true;
-                print("password checked true");
             }
-            print("password did not pass regex");
         }
-        print("password did not pass size");
-
     }
+
     if ($userValid == false || $passwordValid == false || $emailValid == false){
-        print("<p>Username or password invalid<p>");
-        print("<a href='signUp.php'>Return to sign up form</a>");
+        print("<p class='pageStrt'>Username or password invalid<p>");
+        print("<a class='pageStrt' href='signUp.php'>Return to sign up form</a>");
     }
     else{
         $stmt2 = mysqli_prepare($connect, "INSERT into $table_u (username, email, password) VALUES (?, ?, ?)");
@@ -97,8 +95,8 @@ function verifySignUp(){
         mysqli_stmt_execute($stmt2);
         mysqli_stmt_close($stmt2);
 
-        print "<p>Successfully registered for Price Alert<p>";
-        print "<a href='login.php'>Login</a>";
+        print "<p class='pageStrt'>Successfully registered for Price Alert<p>";
+        print "<a class='pageStrt' href='login.php'>Login</a>";
     }
     mysqli_close($connect);
 }
