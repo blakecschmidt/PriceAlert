@@ -73,7 +73,7 @@ function verifySignUp(){
     }
     $result ->free();
     if (sizeof($_POST['passWord']) >= 6){
-        if (preg_match("/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,}))/", $_POST['passWord'])){
+        if (preg_match('/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/', $_POST['passWord'])){
             if($password == $repeatPassword){
                 $passwordValid = true;
             }
