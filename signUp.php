@@ -67,7 +67,7 @@ function verifySignUp(){
     print($row);
     if ($row[0] == $username){
         $userValid = false;
-        print("user name striaght false");
+        print("user name straight false");
     }
     elseif (sizeof($username) >= 10 && sizeof($username) <= 20){
         if (preg_match("/^[a-zA-Z]+[a-zA-Z0-9]*$/", $username)){
