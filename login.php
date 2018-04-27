@@ -30,6 +30,12 @@ if ($_POST['userName'] == "" || $_POST['passWord'] == ""){
 elseif ($_POST['userName'] != "" && $_POST['passWord'] != ""){
     verifyLogin();
 }
+function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+    }
 
 function verifyLogin(){
     $host = "spring-2018.cs.utexas.edu";
@@ -45,7 +51,7 @@ function verifyLogin(){
     }
 
     //TODO double check table name is correct
-    $table_u = "Users";
+    $table_u = "User";
 
     $userName = $_POST['userName'];
     $password = crypt($_POST['passWord']);
@@ -61,9 +67,11 @@ function verifyLogin(){
             if(sizeof($_POST['stay']) == 1){
                 $_COOKIE['username'] = $userName;
             }
+            print("Logged in.");
+            redirect("home.html");
         }
         else{
-            print("Username or password incorrect.");
+            print("<b>Username or password incorrect.</b>");
             print("<a href='login.php'>Return to login form.</a>");
         }
     }

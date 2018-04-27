@@ -47,7 +47,7 @@ function verifySignUp(){
     }
 
     //TODO double check table name is correct
-    $table_u = "Users";
+    $table_u = "User";
     $username = $_POST['userName'];
     $email = $_POST['email'];
     $password = crypt($_POST['passWord']);
@@ -92,7 +92,7 @@ function signUpForm(){
     print <<<signUp
         <div class="wrapper">
             <div class="signUp">
-                <form action = "userSignUp.php" method = "post">
+                <form action = "" method = "post">
                     <table>
                         <tr>
                             <td><label for = "userName">User Name:</label></td>
