@@ -50,7 +50,11 @@ function edit()
     $table_item = "Item";
     $table_itu = "itemToUser";
     $table_itr = "itemToRetailer";
-    $username = $_COOKIE["username"];
+    if (isset($_COOKIE["username"])) {
+        $username = $_COOKIE["username"];
+    } else {
+        $username = $_SESSION["username"];
+    }
     $itemName = $_POST["itemName"];
 
     $allIDs = $_POST["allIDs"];
@@ -147,7 +151,12 @@ function editForm()
     }
 
     $itemName = $_POST["itemName"];
-    $username = $_COOKIE["username"];
+
+    if (isset($_COOKIE["username"])) {
+        $username = $_COOKIE["username"];
+    } else {
+        $username = $_SESSION["username"];
+    }
 
     $stmt = mysqli_prepare($connect, "SELECT retailer, url, itemID, alertPrice FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? AND itemName = ?");
     mysqli_stmt_bind_param($stmt, 'ss', $username, $itemName);

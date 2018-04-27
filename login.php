@@ -67,9 +67,9 @@ function verifyLogin(){
     if(sizeof($row) == 3){
         if ($password == $row[2]){
             session_start();
-            $_SESSION['user'] = $userName;
+            $_SESSION['username'] = $userName;
             if(sizeof($_POST['stay']) == 1){
-                $_COOKIE['username'] = $userName;
+                setcookie("username", $userName);
             }
             print("Logged in.");
             redirect("home.html");

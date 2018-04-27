@@ -80,7 +80,7 @@ function verifySignUp(){
         }
     }
     if ($userValid == false || $passwordValid == false || $emailValid == false){
-        print("username or password invalid.");
+        print("<p>Username or password invalid<p>");
         print("<a href='signUp.php'>Return to sign up form</a>");
     }
     else{
@@ -89,7 +89,7 @@ function verifySignUp(){
         mysqli_stmt_execute($stmt2);
         mysqli_stmt_close($stmt2);
 
-        print "<p>Successfully registered for Price Alert</p>";
+        print "<p>Successfully registered for Price Alert<p>";
         print "<a href='login.php'>Login</a>";
     }
     mysqli_close($connect);

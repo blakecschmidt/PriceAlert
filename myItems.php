@@ -40,7 +40,11 @@ if (empty($connect)) {
 }
 
 $itemName = "";
-$username = $_COOKIE["username"];
+if (isset($_COOKIE["username"])) {
+    $username = $_COOKIE["username"];
+} else {
+    $username = $_SESSION["username"];
+}
 
 $stmt1 = mysqli_prepare($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? ORDER BY itemName");
 mysqli_stmt_bind_param($stmt1, 's', $username);

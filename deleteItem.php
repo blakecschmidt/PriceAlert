@@ -113,7 +113,11 @@ function deleteForm()
     }
 
     $itemName = $_POST["itemName"];
-    $username = $_COOKIE["username"];
+    if (isset($_COOKIE["username"])) {
+        $username = $_COOKIE["username"];
+    } else {
+        $username = $_SESSION["username"];
+    }
 
     $stmt = mysqli_prepare($connect, "SELECT retailer, url, itemID FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? AND itemName = ?");
     mysqli_stmt_bind_param($stmt, 'ss', $username, $itemName);

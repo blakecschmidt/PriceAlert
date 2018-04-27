@@ -51,7 +51,11 @@ function insert()
     $table_itu = "itemToUser";
     $table_itr = "itemToRetailer";
 
-    $username = $_COOKIE["username"];
+    if (isset($_COOKIE["username"])) {
+        $username = $_COOKIE["username"];
+    } else {
+        $username = $_SESSION["username"];
+    }
     $itemName = $_POST["itemName"];
     $alertPrice = $_POST["alertPrice"];
     $retailers = $_POST["retailer"];
