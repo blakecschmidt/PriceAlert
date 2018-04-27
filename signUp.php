@@ -18,7 +18,7 @@
             <li><a href="myItems.php">My Items</a></li>
             <li><a href="myProfile.php">My Profile</a></li>
             <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="logIn.php">Log In</a></li>
+            <li><a href="login.php">Log In</a></li>
         </ul>
     </div>
 </header>
@@ -56,8 +56,12 @@ function verifySignUp(){
     $passwordValid = false;
     $emailValid = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-    $result = mysqli_query($connect,
-        "SELECT * from $table_u WHERE username = $username");
+    $stmt1 = mysqli_prepare($connect, "SELECT * from $table_u WHERE username = (?)");
+    mysqli_stmt_bind_param($stmt1, 's', $username);
+    mysqli_stmt_execute($stmt1);
+    mysqli_stmt_close($stmt1);
+
+    $result = mysqli_query($connect, $stmt1);
     $row = $result->fetch_row();
     if ($row[0] == $username){
         $userValid = false;
@@ -68,7 +72,7 @@ function verifySignUp(){
         }
     }
     $result ->free();
-    if (sizeof($_POST['passWord']) >=6){
+    if (sizeof($_POST['passWord']) >= 6){
         if (preg_match("/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,}))/", $_POST['passWord'])){
             if($password == $repeatPassword){
                 $passwordValid = true;
@@ -80,12 +84,15 @@ function verifySignUp(){
         print("<a href='signUp.php'>Return to sign up form</a>");
     }
     else{
-        $result = mysqli_query($connect,
-            "INSERT into $table_u (username, email, password) VALUES('" . $username . "', '" . $email . "', '" . $password . "')");
-        $result ->free();
-        print("Successfully registered for Price Alert");
-        print("<a href='login.php'>Login</a>");
+        $stmt2 = mysqli_prepare($connect, "INSERT into $table_u (username, email, password) VALUES (?, ?, ?)");
+        mysqli_stmt_bind_param($stmt2, 'sss', $username, $email, $password);
+        mysqli_stmt_execute($stmt2);
+        mysqli_stmt_close($stmt2);
+
+        print "<p>Successfully registered for Price Alert</p>";
+        print "<a href='login.php'>Login</a>";
     }
+    mysqli_close($connect);
 }
 
 function signUpForm(){
@@ -123,7 +130,7 @@ function signUpForm(){
                         </tr>
                     </table>
                 </form>
-                <p><a href="logIn.php">Already have an account? Log in here.</a></p>
+                <p><a href="login.php">Already have an account? Log in here.</a></p>
             </div>
             <div class="signUpInstructions2">
                 User name requirements:

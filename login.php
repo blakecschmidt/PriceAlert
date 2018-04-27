@@ -18,7 +18,7 @@
             <li><a href="myItems.php">My Items</a></li>
             <li><a href="myProfile.php">My Profile</a></li>
             <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="logIn.php">Log In</a></li>
+            <li><a href="login.php">Log In</a></li>
         </ul>
     </div>
 </header>
@@ -57,11 +57,15 @@ function verifyLogin(){
     $password = crypt($_POST['passWord']);
     $stay = $_POST['stay'];
 
-    $result = mysqli_query($connect,
-        "SELECT * from $table_u WHERE UserName = '". $userName ."' ");
+    $stmt1 = mysqli_prepare($connect, "SELECT * from $table_u WHERE username = (?)");
+    mysqli_stmt_bind_param($stmt1, 's', $username);
+    mysqli_stmt_execute($stmt1);
+    mysqli_stmt_close($stmt1);
+
+    $result = mysqli_query($connect, $stmt1);
     $row = $result->fetch_row();
-    if(sizeof($row) == 2){
-        if ($password == $row[1]){
+    if(sizeof($row) == 3){
+        if ($password == $row[2]){
             session_start();
             $_SESSION['user'] = $userName;
             if(sizeof($_POST['stay']) == 1){
@@ -79,6 +83,7 @@ function verifyLogin(){
         print("Username or password incorrect.");
         print("<a href='login.php'>Return to login form.</a>");
     }
+    mysqli_close($connect);
 }
 
 function loginForm()
