@@ -64,6 +64,7 @@ function verifySignUp(){
 
     $result = mysqli_query($connect, $stmt1);
     $row = $result->fetch_row();
+    print($row);
     if ($row[0] == $username){
         $userValid = false;
         print("user name striaght false");
