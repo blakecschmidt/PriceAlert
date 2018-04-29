@@ -76,7 +76,7 @@ function verifySignUp(){
         }
     }
     $result ->free();
-    if (strlen($_POST['passWord']) >= 6){
+    if (strlen($_POST['passWord']) >= 10 && strlen($_POST['passWord']) <= 20){
         if (preg_match('/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/', $_POST['passWord'])){
             if($_POST['passWord'] == $_POST['repeatPassWord']){
                 $passwordValid = true;
@@ -146,11 +146,12 @@ function signUpForm(){
             <div class="signUpInstructions1">
                     Password requirements:
                     <ul>
-                        <li>Must be at least 6 characters in length</li>
+                        <li>10 through 20 characters in length</li>
                         <li>Only letters, digits, and special characters</li>
                         <li>Must have one lower case letter</li>
                         <li>Must have one upper case letter</li>
-                        <li>Must have one digit, and one special character</li>
+                        <li>Must have one digit</li>
+                        <li>Must have one special character (@, etc...)</li>
                     </ul>
                 
             </div>

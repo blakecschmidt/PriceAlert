@@ -237,6 +237,11 @@ p.contact {
     text-align: center;
 }
 
+.logOut table{
+    width: 200px;
+
+}
+
 .logIn table{
     width: 200px;
 

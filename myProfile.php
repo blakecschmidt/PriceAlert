@@ -147,7 +147,7 @@
         }
         elseif ((isset($_POST['oldPassword']) && $_POST['oldPassword'] != '') && (isset($_POST['newPassword']) && $_POST['newPassword'] != '')){
             //!!!!!!
-            if (crypt($_POST['oldPassword']) == $userPassword) {
+            if (crypt($_POST['oldPassword'], $userPassword) == $userPassword) {
                 setPassword($userName, crypt($_POST['newPassword']));
             }
             redirect("myProfile.php");

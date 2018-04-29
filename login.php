@@ -25,7 +25,7 @@
 <?php
 
 if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
-    redirect("home.php");
+    logoutForm();
 }
 elseif ($_POST['userName'] == "" || $_POST['passWord'] == ""){
     loginForm();
@@ -86,6 +86,26 @@ function verifyLogin(){
         print("<p><b class='pageStrt'>Username or password incorrect.</b><a href='login.php'>Return to login form.</a></p>");
     }
     mysqli_close($connect);
+}
+
+function logoutForm()
+{
+    print <<<logoutForm
+    <div class="wrapper">
+        <div class="logIn">
+            <form action = "logout.php" method = "post">
+                <table>
+                    <tr>
+                        <td>You are already logged in, click "Log Out" to log out.</td>
+                    </tr>
+                    <tr>
+                        <td><input type = "submit" value = "Log Out">
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+logoutForm;
 }
 
 function loginForm()
