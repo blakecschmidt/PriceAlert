@@ -148,10 +148,9 @@ function signUpForm(){
                     <ul>
                         <li>10 through 20 characters in length</li>
                         <li>Only letters, digits, and special characters</li>
-                        <li>Must have one lower case letter</li>
-                        <li>Must have one upper case letter</li>
+                        <li>Must have one lower and upper case letter</li>
                         <li>Must have one digit</li>
-                        <li>Must have one special character (@, etc...)</li>
+                        <li>Must have one special character (@, #, $, %, ^, %, *)</li>
                     </ul>
                 
             </div>
