@@ -1,3 +1,7 @@
+* {
+    /*border: 1px red solid;*/
+}
+
 body {
     background-color: whitesmoke;
     margin: 0 auto;
@@ -56,6 +60,70 @@ body {
     margin: -3px;
     border-left: 1px solid white;
 }
+
+.myItemsStrt {
+    position: relative;
+    top: 200px;
+    margin: 0 auto;
+    height: 800px;
+    width: 75%;
+}
+
+.myItem {
+    position: relative;
+    top: 50px;
+}
+
+.myItemsFooter {
+    position: absolute;
+    top: 1000px;
+    z-index: 10;
+    border-top: 4px solid dodgerblue;
+    height: 120px;
+    width: 100%;
+    background-color: dodgerblue;
+    color: white;
+}
+
+.addItemBtn {
+    width: 50px;
+    margin: 0 auto;
+}
+
+.addItems {
+    position: relative;
+    top: 170px;
+    margin: 0 auto;
+    height: 400px;
+    width: 50%;
+}
+
+.addItems h1 {
+    font-family: Georgia;
+    text-align: center;
+}
+
+.addItemsTable {
+    margin: 0 auto;
+    width: 450px;
+}
+
+.addItemsFooter {
+    border-top: 4px solid dodgerblue;
+    position: absolute;
+    top: 650px;
+    height: 120px;
+    width: 100%;
+    background-color: dodgerblue;
+    color: white;
+}
+
+.addItemsFooter p {
+    text-align: center;
+    position: relative;
+    top: 45px;
+}
+
 .myProfile > * {
     position: relative;
     top:-150px;

@@ -23,12 +23,13 @@
     </div>
 </header>
 
-<div class="myItemStrt">
+<div class="myItemsStrt">
 
 <?php
+session_start();
 
 print <<<TABLE
-<form class="pageStrt" method = "post" action = "addItem.php">
+<form class="addItemBtn" method = "post" action = "addItem.php">
     <td><input type="submit" value="Add Item"></td>
 </form>
 TABLE;
@@ -52,17 +53,7 @@ if (isset($_COOKIE["username"])) {
     $username = $_SESSION["username"];
 }
 
-$stmt1 = mysqli_prepare($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? ORDER BY itemName");
-mysqli_stmt_bind_param($stmt1, 's', $username);
-mysqli_stmt_execute($stmt1);
-mysqli_stmt_close($stmt1);
-
-$stmt2 = mysqli_prepare($connect, "SELECT itemName, COUNT(*) FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? GROUP BY itemName ORDER BY itemName");
-mysqli_stmt_bind_param($stmt2, 's', $username);
-mysqli_stmt_execute($stmt2);
-mysqli_stmt_close($stmt2);
-
-$result1 = mysqli_query($connect, $stmt1);
+$result1 = mysqli_query($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = '" . $username . "' ORDER BY itemName");
 $itemInfo = array();
 
 while ($row = $result1->fetch_row()) {
@@ -70,7 +61,7 @@ while ($row = $result1->fetch_row()) {
 }
 $result1->free();
 
-$result2 = mysqli_query($connect, $stmt2);
+$result2 = mysqli_query($connect, "SELECT itemName, COUNT(*) FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = '" . $username . "' GROUP BY itemName ORDER BY itemName");
 $itemCount = array();
 
 while ($row = $result2->fetch_row()) {
@@ -82,10 +73,12 @@ mysqli_close($connect);
 $count = 0;
 
 for ($i = 0; $i < sizeof($itemCount); $i++) {
+    $itemHeaderName = $itemCount[$i][0];
+
     print <<<TABLE
 <table class="myItem">
     <tr>
-        <th>$itemCount[$i][0]</th>
+        <th>$itemHeaderName</th>
         <th>Current Price</th>
         <th>Alert Price</th>
         <th>Link</th>
@@ -93,29 +86,41 @@ for ($i = 0; $i < sizeof($itemCount); $i++) {
 TABLE;
 
     for ($j = 0; $j < $itemCount[$i][1]; $j++) {
+        $itemTableRetailer = $itemInfo[$count][2];
+        $itemTableCurrentPrice = $itemInfo[$count][4];
+        $itemTableAlertPrice = $itemInfo[$count][1];
+        $itemTableURL = $itemInfo[$count][3];
+
+        if ($itemTableCurrentPrice == null) {
+            $itemTableCurrentPrice = "Not Checked Yet";
+        }
+
         print <<<TABLE
     <tr>
-        <td>$itemInfo[$count][2]</td>
-        <td>$itemInfo[$count][4]</td>
-        <td>$itemInfo[$count][1]</td>
-        <td>$itemInfo[$count][3]</td>
+        <td>$itemTableRetailer</td>
+        <td>$itemTableCurrentPrice</td>
+        <td>$itemTableAlertPrice</td>
+        <td><a href=$itemTableURL>Link to Store</a></td>
     </tr>
 TABLE;
         $count++;
     }
+    $itemTableID = $itemCount[$i][0];
+
     print <<<TABLE
     <tr>
         <form method = "post" action = "editItem.php">
-            <input type="hidden" name="itemName" id="itemName" value=$itemCount[$i][0]>
+            <input type="hidden" name="itemName" id="itemName" value=$itemTableID>
             <td><input type="submit" value="Edit Item"></td>
         </form>
         
         <form method = "post" action = "deleteItem.php">
-            <input type="hidden" name="itemName" id="itemName" value=$itemCount[$i][0]>
+            <input type="hidden" name="itemName" id="itemName" value=$itemTableID>
             <td><input type="submit" value="Delete Item"></td>
         </form>
     </tr>
 </table>
+<br><br>
 TABLE;
 
 }
@@ -123,8 +128,8 @@ TABLE;
 ?>
 </div>
 
-<footer>
-    <div class="footer">
+<footer class="myItemsFooter">
+    <div>
         <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
     </div>
 </footer>

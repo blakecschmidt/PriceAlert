@@ -25,6 +25,7 @@
 <h1>Delete An Item</h1>
 
 <?php
+session_start();
 
 if (isset($_POST)) {
     edit();

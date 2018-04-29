@@ -22,9 +22,11 @@
         </ul>
     </div>
 </header>
+<div class="addItems">
 <h1>Add An Item</h1>
 
 <?php
+session_start();
 
 if (isset($_POST) && $_POST["itemName"] != "" && $_POST["alertPrice"] != "" && sizeof($_POST["retailer"]) > 0) {
     insert();
@@ -89,23 +91,26 @@ function insert()
         mysqli_stmt_execute($stmt2);
         mysqli_stmt_close($stmt2);
 
-        /*$stmt3 = mysqli_prepare($connect, "INSERT INTO $table_itr (itemID, retailer, url, currentPrice) VALUES (?, ?, ?, ?)");
-        mysqli_stmt_bind_param($stmt3, 'sssd', $itemID, $retailer, $url, NULL);
+        $stmt3 = mysqli_prepare($connect, "INSERT INTO $table_itr (itemID, retailer, url) VALUES (?, ?, ?)");
+        mysqli_stmt_bind_param($stmt3, 'sss', $itemID, $retailer, $url);
         mysqli_stmt_execute($stmt3);
-        mysqli_stmt_close($stmt3);*/
+        mysqli_stmt_close($stmt3);
     }
-
-    print "<p>Your item has now been added.</p>";
 
     mysqli_close($connect);
 
-    print "<a href='myItems.php'>Back to My Items</a>";
+    print <<<STUFF
+    <p>Your item has now been added.</p>
+    <a href='myItems.php'>Back to My Items</a>
+STUFF;
+
 
 }
 
 function insertForm()
 {
     print <<<FORM
+<div class="addItemsTable">
 <form id = "insertForm" method = "post" action = "">
 
     <table>
@@ -143,15 +148,16 @@ function insertForm()
             <td><input type="text" name="targetURL" id="targetURL" placeholder="Product Page URL"></td>
         </tr>
         
-        <tr><td><input type="submit" value="Submit"></td></tr>
-        <tr><td><input type="reset" value="Clear"></td></tr>
+        <tr><td><input type="submit" value="Submit"></td><td><input type="reset" value="Clear"></td></tr>
     </table>
 </form>
+</div>
 FORM;
 
 }
 
 ?>
+</div>
 
 <footer>
     <div class="footer">
