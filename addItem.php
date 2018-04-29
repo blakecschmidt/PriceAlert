@@ -71,6 +71,8 @@ function insert()
             $url = $_POST["walmartURL"];
         } elseif ($retailer == "Target") {
             $url = $_POST["targetURL"];
+        } else {
+            $url = "none";
         }
 
         $stmt1 = mysqli_prepare($connect, "INSERT INTO $table_item (itemName, alertPrice) VALUES (?, ?)");
@@ -78,15 +80,19 @@ function insert()
         mysqli_stmt_execute($stmt1);
         mysqli_stmt_close($stmt1);
 
-        $stmt2 = mysqli_prepare($connect, "INSERT INTO $table_itu (username) VALUES (?)");
-        mysqli_stmt_bind_param($stmt2, 's', $username);
+        $result_itemID = mysqli_query($connect, "SELECT itemID FROM $table_item ORDER BY itemID DESC");
+        $row = $result_itemID->fetch_row();
+        $itemID = $row[0];
+
+        $stmt2 = mysqli_prepare($connect, "INSERT INTO $table_itu (itemID, username) VALUES (?, ?)");
+        mysqli_stmt_bind_param($stmt2, 'ss', $itemID, $username);
         mysqli_stmt_execute($stmt2);
         mysqli_stmt_close($stmt2);
 
-        $stmt3 = mysqli_prepare($connect, "INSERT INTO $table_itr (retailer, url, currentPrice) VALUES (?, ?, ?)");
-        mysqli_stmt_bind_param($stmt3, 'ssd', $retailer, $url, NULL);
+        /*$stmt3 = mysqli_prepare($connect, "INSERT INTO $table_itr (itemID, retailer, url, currentPrice) VALUES (?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt3, 'sssd', $itemID, $retailer, $url, NULL);
         mysqli_stmt_execute($stmt3);
-        mysqli_stmt_close($stmt3);
+        mysqli_stmt_close($stmt3);*/
     }
 
     print "<p>Your item has now been added.</p>";
@@ -102,44 +108,44 @@ function insertForm()
     print <<<FORM
 <form id = "insertForm" method = "post" action = "">
 
-<table>
-
-    <tr>
-        <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName"></td>
-    </tr>
+    <table>
     
-    <tr>
-        <td><label for="alertPrice">Alert Price: </label></td><td><input type="text" name="alertPrice" id="alertPrice"></td>
-    </tr>
-    
-    <tr>
-        <td><input type="checkbox" name="retailer[]" value="Amazon" id="amazon"></td><td><label for="amazon"> Amazon</label></td>
-        <td><input type="text" name="amazonURL" id="amazonURL" placeholder="Product Page URL"></td>
-    </tr>
-    
-    <tr>
-        <td><input type="checkbox" name="retailer[]" value="Best Buy" id="bestbuy"></td><td><label for="bestbuy"> Best Buy</label></td>
-        <td><input type="text" name="bestbuyURL" id="bestbuyURL" placeholder="Product Page URL"></td>
-    </tr>
-    
-    <tr>
-        <td><input type="checkbox" name="retailer[]" value="Dell" id="dell"></td><td><label for="dell"> Dell</label></td>
-        <td><input type="text" name="dellURL" id="dellURL" placeholder="Product Page URL"></td>
-    </tr>
-    
-    <tr>
-        <td><input type="checkbox" name="retailer[]" value="Walmart" id="walmart"></td><td><label for="walmart"> Walmart</label></td>
-        <td><input type="text" name="walmartURL" id="walmartURL" placeholder="Product Page URL"></td>
-    </tr>
-    
-    <tr>
-        <td><input type="checkbox" name="retailer[]" value="Target" id="target"></td><td><label for="target"> Target</label></td>
-        <td><input type="text" name="targetURL" id="targetURL" placeholder="Product Page URL"></td>
-    </tr>
-
-    <tr><td><input type="submit" value="Submit"></td></tr>
-    <tr><td><input type="reset" value="Clear"></td></tr>
-</table>
+        <tr>
+            <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName"></td>
+        </tr>
+        
+        <tr>
+            <td><label for="alertPrice">Alert Price: </label></td><td><input type="text" name="alertPrice" id="alertPrice"></td>
+        </tr>
+        
+        <tr>
+            <td><input type="checkbox" name="retailer[]" value="Amazon" id="amazon"></td><td><label for="amazon"> Amazon</label></td>
+            <td><input type="text" name="amazonURL" id="amazonURL" placeholder="Product Page URL"></td>
+        </tr>
+        
+        <tr>
+            <td><input type="checkbox" name="retailer[]" value="Best Buy" id="bestbuy"></td><td><label for="bestbuy"> Best Buy</label></td>
+            <td><input type="text" name="bestbuyURL" id="bestbuyURL" placeholder="Product Page URL"></td>
+        </tr>
+        
+        <tr>
+            <td><input type="checkbox" name="retailer[]" value="Dell" id="dell"></td><td><label for="dell"> Dell</label></td>
+            <td><input type="text" name="dellURL" id="dellURL" placeholder="Product Page URL"></td>
+        </tr>
+        
+        <tr>
+            <td><input type="checkbox" name="retailer[]" value="Walmart" id="walmart"></td><td><label for="walmart"> Walmart</label></td>
+            <td><input type="text" name="walmartURL" id="walmartURL" placeholder="Product Page URL"></td>
+        </tr>
+        
+        <tr>
+            <td><input type="checkbox" name="retailer[]" value="Target" id="target"></td><td><label for="target"> Target</label></td>
+            <td><input type="text" name="targetURL" id="targetURL" placeholder="Product Page URL"></td>
+        </tr>
+        
+        <tr><td><input type="submit" value="Submit"></td></tr>
+        <tr><td><input type="reset" value="Clear"></td></tr>
+    </table>
 </form>
 FORM;
 

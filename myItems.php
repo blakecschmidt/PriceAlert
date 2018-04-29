@@ -27,6 +27,12 @@
 
 <?php
 
+print <<<TABLE
+<form class="pageStrt" method = "post" action = "addItem.php">
+    <td><input type="submit" value="Add Item"></td>
+</form>
+TABLE;
+
 $host = "spring-2018.cs.utexas.edu";
 $user = "bcs2363";
 $pwd = "4fPUF78Nu~";
@@ -60,7 +66,7 @@ $result1 = mysqli_query($connect, $stmt1);
 $itemInfo = array();
 
 while ($row = $result1->fetch_row()) {
-    $itemInfo[] = array(row[0], row[1], row[2], row[3], row[4]);
+    $itemInfo[] = array($row[0], $row[1], $row[2], $row[3], $row[4]);
 }
 $result1->free();
 
@@ -68,18 +74,12 @@ $result2 = mysqli_query($connect, $stmt2);
 $itemCount = array();
 
 while ($row = $result2->fetch_row()) {
-    $itemCount[] = array(row[0], row[1]);
+    $itemCount[] = array($row[0], $row[1]);
 }
 $result2->free();
 
 mysqli_close($connect);
 $count = 0;
-
-print <<<TABLE
-<form method = "post" action = "addItem.php">
-    <td><input type="submit" value="Add Item"></td>
-</form>
-TABLE;
 
 for ($i = 0; $i < sizeof($itemCount); $i++) {
     print <<<TABLE
