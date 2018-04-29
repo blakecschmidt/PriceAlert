@@ -60,27 +60,6 @@
         return $row[0];
     }
 
-    function pullPassword($userName){
-        $host = "spring-2018.cs.utexas.edu";
-        $user = "bcs2363";
-        $pwd = "4fPUF78Nu~";
-        $dbs = "cs329e_bcs2363";
-        $port = "3306";
-
-        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
-
-        if (empty($connect)) {
-            die("mysqli_connect failed: " . mysqli_connect_error());
-        }
-
-        //TODO double check table name is correct
-        $table_u = "User";
-
-        $result = mysqli_query($connect, "SELECT password from $table_u WHERE username = '". $userName ."' ");
-        $row = $result->fetch_row();
-        return $row[0];
-    }
-
     function setEmail($userName, $userEmail){
         $host = "spring-2018.cs.utexas.edu";
         $user = "bcs2363";
@@ -104,29 +83,6 @@
         mysqli_close($connect);
     }
 
-    function setPassword($userName, $password){
-        $host = "spring-2018.cs.utexas.edu";
-        $user = "bcs2363";
-        $pwd = "4fPUF78Nu~";
-        $dbs = "cs329e_bcs2363";
-        $port = "3306";
-
-        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
-
-        if (empty($connect)) {
-            die("mysqli_connect failed: " . mysqli_connect_error());
-        }
-
-        //TODO double check table name is correct
-        $table_u = "User";
-
-        $qry = "UPDATE $table_u SET password = '".$password."' WHERE username = '". $userName ."'";
-        $stmt = mysqli_prepare($connect, $qry);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-        mysqli_close($connect);
-    }
-
 
     if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
         if (isset($_SESSION['username'])) {
@@ -137,18 +93,10 @@
         }
 
         $userEmail = pullEmail($userName);
-        $userPassword = pullPassword($userName);
 
-        if (isset($_POST['newEmail']) && $_POST['newEmail'] != '') {
-            if ($_POST['newEmail'] != $userEmail) {
-                setEmail($userName, $_POST['newEmail']);
-            }
-            redirect("myProfile.php");
-        }
-        elseif ((isset($_POST['oldPassword']) && $_POST['oldPassword'] != '') && (isset($_POST['newPassword']) && $_POST['newPassword'] != '')){
-            //!!!!!!
-            if (crypt($_POST['oldPassword']) == $userPassword) {
-                setPassword($userName, crypt($_POST['newPassword']));
+        if (isset($_POST['email']) && $_POST['email'] != ''){
+            if ($_POST['email'] != $userEmail) {
+                setEmail($userName, $_POST['email']);
             }
             redirect("myProfile.php");
         }
@@ -159,16 +107,10 @@
                 <form action = "" method = "post">
                     <table>
                         <tr>
-                            <td><label for = "oldEmail">Old Email:</label></td>
+                            <td><label for = "email">Email:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "oldEmail" id = "oldEmail" value = "$userEmail"></td>
-                        </tr>
-                        <tr>
-                            <td><label for = "newEmail">New Email:</label></td>
-                        </tr>
-                        <tr>
-                            <td><input type = "text" name = "newEmail" id = "newEmail"></td>
+                            <td><input type = "text" name = "email" id = "email" value = "$userEmail"></td>
                         </tr>
                         <tr>
                             <td><input type = "submit" value = "Save"><input type = "reset" value = "Reset"></td>
@@ -181,16 +123,10 @@
             <form action = "" method = "post">
                     <table>
                         <tr>
-                            <td><label for = "oldPassword">Old Password:</label></td>
+                            <td><label for = "password">Password:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "oldPassword" id = "oldPassword""></td>
-                        </tr>
-                        <tr>
-                            <td><label for = "newPassword">New Password:</label></td>
-                        </tr>
-                        <tr>
-                            <td><input type = "text" name = "newPassword" id = "newPassword""></td>
+                            <td><input type = "text" name = "password" id = "password" value = "$userEmail"></td>
                         </tr>
                         <tr>
                             <td><input type = "submit" value = "Save"><input type = "reset" value = "Reset"></td>

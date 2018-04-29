@@ -18,7 +18,7 @@
                 <li><a href="myItems.php">My Items</a></li>
                 <li><a href="myProfile.php">My Profile</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="logIn.php">Log In</a></li>
+                <li><a href="login.php">Log In</a></li>
             </ul>
         </div>
     </header>
