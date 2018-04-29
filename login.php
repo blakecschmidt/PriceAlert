@@ -24,7 +24,10 @@
 </header>
 <?php
 
-if ($_POST['userName'] == "" || $_POST['passWord'] == ""){
+if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+    redirect("home.php");
+}
+elseif ($_POST['userName'] == "" || $_POST['passWord'] == ""){
     loginForm();
 }
 elseif ($_POST['userName'] != "" && $_POST['passWord'] != ""){
@@ -80,8 +83,7 @@ function verifyLogin(){
         }
     }
     else{
-        print("<b class='pageStrt'>Username or password incorrect.</b>");
-        print("<a class='pageStrt' href='login.php'>Return to login form.</a>");
+        print("<p><b class='pageStrt'>Username or password incorrect.</b><a href='login.php'>Return to login form.</a></p>");
     }
     mysqli_close($connect);
 }
