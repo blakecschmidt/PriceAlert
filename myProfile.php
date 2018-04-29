@@ -39,37 +39,68 @@
     die();
     }
 
-    function pullPersonalInfo($userName){
-    $host = "spring-2018.cs.utexas.edu";
-    $user = "bcs2363";
-    $pwd = "4fPUF78Nu~";
-    $dbs = "cs329e_bcs2363";
-    $port = "3306";
+    function pullEmail($userName){
+        $host = "spring-2018.cs.utexas.edu";
+        $user = "bcs2363";
+        $pwd = "4fPUF78Nu~";
+        $dbs = "cs329e_bcs2363";
+        $port = "3306";
 
-    $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
+        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
 
-    if (empty($connect)) {
-        die("mysqli_connect failed: " . mysqli_connect_error());
+        if (empty($connect)) {
+            die("mysqli_connect failed: " . mysqli_connect_error());
+        }
+
+        //TODO double check table name is correct
+        $table_u = "User";
+
+        $result = mysqli_query($connect, "SELECT email from $table_u WHERE username = '". $userName ."' ");
+        $row = $result->fetch_row();
+        return $row[0];
     }
 
-    //TODO double check table name is correct
-    $table_u = "Users";
+    function setEmail($userName, $userEmail){
+        $host = "spring-2018.cs.utexas.edu";
+        $user = "bcs2363";
+        $pwd = "4fPUF78Nu~";
+        $dbs = "cs329e_bcs2363";
+        $port = "3306";
 
-    $result = mysqli_query($connect, "SELECT password from $table_u WHERE UserName = '". $userName ."' ");
-    $row = $result->fetch_row();
-    return $row[0];
+        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
+
+        if (empty($connect)) {
+            die("mysqli_connect failed: " . mysqli_connect_error());
+        }
+
+        //TODO double check table name is correct
+        $table_u = "User";
+
+        $qry = "UPDATE $table_u SET email = '".$userEmail."' WHERE username = '". $userName ."'";
+        $stmt = mysqli_prepare($connect, $qry);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        mysqli_close($connect);
     }
 
 
-    if (isset($_SESSION['user']) || isset($_COOKIE['username'])) {
-        if (isset($_SESSION['user'])) {
-        $userName = $_SESSION['user'];
+    if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+        if (isset($_SESSION['username'])) {
+        $userName = $_SESSION['username'];
         }
         else {
         $userName = $_COOKIE['username'];
         }
 
-        $personalInfo = pullPersonalInfo($userName);
+        $userEmail = pullEmail($userName);
+
+        if (isset($_POST['email']) && $_POST['email'] != ''){
+            if ($_POST['email'] != $userEmail) {
+                setEmail($userName, $_POST['email']);
+            }
+            redirect("myProfile.php");
+        }
+        else {
         print <<<PERSINFO
          <h1>Personal Info</h1>
                 <form action = "" method = "post">
@@ -78,7 +109,7 @@
                             <td><label for = "email">Email:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "email" id = "email" value = "$personalInfo"></td>
+                            <td><input type = "text" name = "email" id = "email" value = "$userEmail"></td>
                         </tr>
                         <tr>
                             <td><label for = "name">Name:</label></td>
@@ -92,10 +123,11 @@
                     </table>
                 </form>
 PERSINFO;
+    }
 
     }
     else {
-    redirect("logIn.php");
+    redirect("login.php");
 }
 ?>
         </div>
@@ -113,73 +145,7 @@ PERSINFO;
         var settingsButton = document.getElementById("settings");
 
         personalInfoButton.onclick = function() {
-            div.innerHTML = "<?php
-    function redirect($url) {
-    ob_start();
-    header("Location: " . $url);
-    ob_end_flush();
-    die();
-    }
-
-    function pullPersonalInfo($userName){
-    $host = "spring-2018.cs.utexas.edu";
-    $user = "bcs2363";
-    $pwd = "4fPUF78Nu~";
-    $dbs = "cs329e_bcs2363";
-    $port = "3306";
-
-    $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
-
-    if (empty($connect)) {
-        die("mysqli_connect failed: " . mysqli_connect_error());
-    }
-
-    //TODO double check table name is correct
-    $table_u = "Users";
-
-    $result = mysqli_query($connect, "SELECT password from $table_u WHERE UserName = '". $userName ."' ");
-    $row = $result->fetch_row();
-    return $row[0];
-    }
-
-
-    if (isset($_SESSION['user']) || isset($_COOKIE['username'])) {
-        if (isset($_SESSION['user'])) {
-        $userName = $_SESSION['user'];
-        }
-        else {
-        $userName = $_COOKIE['username'];
-        }
-
-        $personalInfo = pullPersonalInfo($userName);
-        print <<<PERSINFO
-         <h1>Personal Info</h1>
-                <form action = "" method = "post">
-                    <table>
-                        <tr>
-                            <td><label for = "email">Email:</label></td>
-                        </tr>
-                        <tr>
-                            <td><input type = "text" name = "email" id = "email" value = "$personalInfo"></td>
-                        </tr>
-                        <tr>
-                            <td><label for = "name">Name:</label></td>
-                        </tr>
-                        <tr>
-                            <td><input type = "name" name = "name" id = "name"></td>
-                        </tr>
-                        <tr>
-                            <td><input type = "submit" value = "Save"><input type = "reset" value = "Reset"></td>
-                        </tr>
-                    </table>
-                </form>
-PERSINFO;
-
-    }
-    else {
-    redirect("login.php");
-}
-?>"
+            div.innerHTML = "test"
         }
 
         securityButton.onclick = function() {

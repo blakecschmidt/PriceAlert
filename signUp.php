@@ -85,8 +85,7 @@ function verifySignUp(){
     }
 
     if ($userValid == false || $passwordValid == false || $emailValid == false){
-        print("<p class='pageStrt'>Username or password invalid<p>");
-        print("<a class='pageStrt' href='signUp.php'>Return to sign up form</a>");
+        print("<p class='pageStrt'>Username or password invalid. <a href='signUp.php'>Return to sign up form.</a><p>");
     }
     else{
         $stmt2 = mysqli_prepare($connect, "INSERT into $table_u (username, email, password) VALUES (?, ?, ?)");
@@ -94,8 +93,7 @@ function verifySignUp(){
         mysqli_stmt_execute($stmt2);
         mysqli_stmt_close($stmt2);
 
-        print "<p class='pageStrt'>Successfully registered for Price Alert<p>";
-        print "<a class='pageStrt' href='login.php'>Login</a>";
+        print "<p class='pageStrt'>Successfully registered for Price Alert. <a href='login.php'>Login.</a><p>";
     }
     mysqli_close($connect);
 }
@@ -152,7 +150,7 @@ function signUpForm(){
                         <li>Only letters, digits, and special characters</li>
                         <li>Must have one lower case letter</li>
                         <li>Must have one upper case letter</li>
-                        <li>Must have one digit</li>
+                        <li>Must have one digit, and one special character</li>
                     </ul>
                 
             </div>

@@ -14,7 +14,7 @@
 
     <div class="navBar">
         <ul>
-            <li><a id="home" href="home.html">Home</a></li>
+            <li><a id="home" href="home.php">Home</a></li>
             <li><a href="myItems.php">My Items</a></li>
             <li><a href="myProfile.php">My Profile</a></li>
             <li><a href="contact.html">Contact Us</a></li>
@@ -73,11 +73,10 @@ function verifyLogin(){
             if(sizeof($stay) == 1){
                 setcookie("username", $userName);
             }
-            redirect("home.html");
+            redirect("home.php");
         }
         else{
-            print("<b class='pageStrt'>Username or password incorrect.</b>");
-            print("<a class='pageStrt' href='login.php'>Return to login form.</a>");
+            print("<p><b class='pageStrt'>Username or password incorrect.</b><a href='login.php'>Return to login form.</a></p>");
         }
     }
     else{
