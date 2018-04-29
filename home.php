@@ -8,7 +8,7 @@
 <body>
     <header>
         <div class="header">
-            <a href="home.html"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
+            <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
             <h1>Price Alert</h1>
         </div>
 
