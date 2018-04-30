@@ -28,6 +28,18 @@
 <?php
 session_start();
 
+function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+}
+
+if (!isset($_COOKIE["username"]) && !isset($_SESSION["username"])) {
+    redirect("./login.php");
+    return;
+}
+
 if (isset($_POST) && $_POST["itemName"] != "" && $_POST["alertPrice"] != "" && sizeof($_POST["retailer"]) > 0) {
     insert();
 } else {

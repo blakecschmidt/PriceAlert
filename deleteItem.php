@@ -22,12 +22,25 @@
         </ul>
     </div>
 </header>
+<div class="deleteItems">
 <h1>Delete An Item</h1>
 
 <?php
 session_start();
 
-if (isset($_POST) && ($_POST["all"] == "true" || sizeof($_POST["retailer"]) > 0)) {
+function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+}
+
+if (!isset($_COOKIE["username"]) && !isset($_SESSION["username"])) {
+    redirect("./login.php");
+    return;
+}
+
+if (isset($_POST["allIDs"]) && ($_POST["all"] == "true" || sizeof($_POST["retailer"]) > 0)) {
     delete();
 } else {
     deleteForm();
@@ -75,20 +88,20 @@ function delete()
     }
 
     foreach ($itemIDsToDelete as $id) {
-        $stmt1 = mysqli_prepare($connect, "DELETE FROM $table_item WHERE itemID = (?)");
-        mysqli_stmt_bind_param($stmt1, 's', $id);
-        mysqli_stmt_execute($stmt1);
-        mysqli_stmt_close($stmt1);
+        $stmt3 = mysqli_prepare($connect, "DELETE FROM $table_itr WHERE itemID = (?)");
+        mysqli_stmt_bind_param($stmt3, 's', $id);
+        mysqli_stmt_execute($stmt3);
+        mysqli_stmt_close($stmt3);
 
         $stmt2 = mysqli_prepare($connect, "DELETE FROM $table_itu WHERE itemID = (?)");
         mysqli_stmt_bind_param($stmt2, 's', $id);
         mysqli_stmt_execute($stmt2);
         mysqli_stmt_close($stmt2);
 
-        $stmt3 = mysqli_prepare($connect, "DELETE FROM $table_itr WHERE itemID = (?)");
-        mysqli_stmt_bind_param($stmt3, 's', $id);
-        mysqli_stmt_execute($stmt3);
-        mysqli_stmt_close($stmt3);
+        $stmt1 = mysqli_prepare($connect, "DELETE FROM Item WHERE itemID = (?)");
+        mysqli_stmt_bind_param($stmt1, 'd', $id);
+        mysqli_stmt_execute($stmt1);
+        mysqli_stmt_close($stmt1);
     }
 
     print "<p>The items you selected have now been deleted.</p>";
@@ -120,12 +133,7 @@ function deleteForm()
         $username = $_SESSION["username"];
     }
 
-    $stmt = mysqli_prepare($connect, "SELECT retailer, url, itemID FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = ? AND itemName = ?");
-    mysqli_stmt_bind_param($stmt, 'ss', $username, $itemName);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    $result = mysqli_query($connect, $stmt);
+    $result = mysqli_query($connect, "SELECT retailer, url, Item.itemID FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = '" . $username . "' AND itemName = '" . $itemName . "'");
 
     $retailers = array();
     $urls = array();
@@ -188,11 +196,15 @@ FORM;
             print "<input type='hidden' name='targetID' id='targetID' value=$targetID>";
         }
     }
+    foreach ($itemIDs as $id) {
+        print <<<FORM
+<input type="hidden" name="allIDs[]" value="$id">
+FORM;
+    }
+
 
     print <<<FORM
-    <input type="hidden" name="allIDs" id="allIDs" value=$itemIDs>
-    <tr><td><input type="submit" value="Submit"></td></tr>
-    <tr><td><input type="reset" value="Clear"></td></tr>
+    <tr><td><input type="submit" value="Submit"></td><td><input type="reset" value="Clear"></td></tr>
 </table>
 </form>
 FORM;
@@ -200,7 +212,7 @@ FORM;
 }
 
 ?>
-
+</div>
 <footer>
     <div class="footer">
         <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>

@@ -186,13 +186,13 @@
                             <td><label for = "oldPassword">Old Password:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "oldPassword" id = "oldPassword""></td>
+                            <td><input type = "password" name = "oldPassword" id = "oldPassword""></td>
                         </tr>
                         <tr>
                             <td><label for = "newPassword">New Password:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "newPassword" id = "newPassword""></td>
+                            <td><input type = "password" name = "newPassword" id = "newPassword""></td>
                         </tr>
                         <tr>
                             <td><input type = "submit" value = "Save"><input type = "reset" value = "Reset"></td>
@@ -211,6 +211,7 @@ INFO;
     }
     else {
     redirect("login.php");
+    return;
 }
 ?>
         </div>

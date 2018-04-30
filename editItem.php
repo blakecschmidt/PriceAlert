@@ -28,6 +28,18 @@
 <?php
 session_start();
 
+function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+}
+
+if (!isset($_COOKIE["username"]) && !isset($_SESSION["username"])) {
+    redirect("./login.php");
+    return;
+}
+
 if (isset($_POST["alertPriceCurrent"])) {
     edit();
 } else {

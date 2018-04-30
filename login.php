@@ -25,7 +25,22 @@
 <?php
 session_start();
 
-if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
+function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+}
+
+if (isset($_POST["logout"])) {
+    if (isset($_COOKIE["username"])) {
+        unset($_COOKIE["username"]);
+    }
+    session_unset();
+    session_destroy();
+    redirect("./login.php");
+    return;
+} elseif (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
     logoutForm();
 }
 elseif ($_POST['userName'] == "" || $_POST['passWord'] == ""){
@@ -34,12 +49,6 @@ elseif ($_POST['userName'] == "" || $_POST['passWord'] == ""){
 elseif ($_POST['userName'] != "" && $_POST['passWord'] != ""){
     verifyLogin();
 }
-function redirect($url) {
-    ob_start();
-    header("Location: " . $url);
-    ob_end_flush();
-    die();
-    }
 
 function verifyLogin(){
     $host = "spring-2018.cs.utexas.edu";
@@ -94,13 +103,14 @@ function logoutForm()
     print <<<logoutForm
     <div class="wrapper">
         <div class="logIn">
-            <form action = "logout.php" method = "post">
+            <form action = "" method = "post">
                 <table>
                     <tr>
                         <td>You are already logged in, click "Log Out" to log out.</td>
                     </tr>
+                    <input type="hidden" name="logout" value="true">
                     <tr>
-                        <td><input type = "submit" value = "Log Out">
+                        <td><input type = "submit" value = "Log Out"></td>
                     </tr>
                 </table>
             </form>

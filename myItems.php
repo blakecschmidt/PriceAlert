@@ -28,6 +28,22 @@
 <?php
 session_start();
 
+function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+}
+
+if (isset($_COOKIE["username"])) {
+    $username = $_COOKIE["username"];
+} elseif (isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
+} else {
+    redirect("./login.php");
+    return;
+}
+
 print <<<TABLE
 <form class="addItemBtn" method = "post" action = "addItem.php">
     <td><input type="submit" value="Add Item"></td>
@@ -47,11 +63,6 @@ if (empty($connect)) {
 }
 
 $itemName = "";
-if (isset($_COOKIE["username"])) {
-    $username = $_COOKIE["username"];
-} else {
-    $username = $_SESSION["username"];
-}
 
 $result1 = mysqli_query($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE username = '" . $username . "' ORDER BY itemName");
 $itemInfo = array();
@@ -70,12 +81,16 @@ while ($row = $result2->fetch_row()) {
 $result2->free();
 
 mysqli_close($connect);
-$count = 0;
 
-for ($i = 0; $i < sizeof($itemCount); $i++) {
-    $itemHeaderName = $itemCount[$i][0];
+if ($itemInfo == null) {
+    print "<p>You have no items. Click the <i>Add Item</i> button to create one.</p>";
+} else {
+    $count = 0;
 
-    print <<<TABLE
+    for ($i = 0; $i < sizeof($itemCount); $i++) {
+        $itemHeaderName = $itemCount[$i][0];
+
+        print <<<TABLE
 <table class="myItem">
     <tr>
         <th>$itemHeaderName</th>
@@ -85,17 +100,17 @@ for ($i = 0; $i < sizeof($itemCount); $i++) {
     </tr>
 TABLE;
 
-    for ($j = 0; $j < $itemCount[$i][1]; $j++) {
-        $itemTableRetailer = $itemInfo[$count][2];
-        $itemTableCurrentPrice = $itemInfo[$count][4];
-        $itemTableAlertPrice = $itemInfo[$count][1];
-        $itemTableURL = $itemInfo[$count][3];
+        for ($j = 0; $j < $itemCount[$i][1]; $j++) {
+            $itemTableRetailer = $itemInfo[$count][2];
+            $itemTableCurrentPrice = $itemInfo[$count][4];
+            $itemTableAlertPrice = $itemInfo[$count][1];
+            $itemTableURL = $itemInfo[$count][3];
 
-        if ($itemTableCurrentPrice == null) {
-            $itemTableCurrentPrice = "Not Checked Yet";
-        }
+            if ($itemTableCurrentPrice == null) {
+                $itemTableCurrentPrice = "Not Checked Yet";
+            }
 
-        print <<<TABLE
+            print <<<TABLE
     <tr>
         <td>$itemTableRetailer</td>
         <td>$itemTableCurrentPrice</td>
@@ -103,11 +118,11 @@ TABLE;
         <td><a href=$itemTableURL>Link to Store</a></td>
     </tr>
 TABLE;
-        $count++;
-    }
-    $itemTableID = $itemCount[$i][0];
+            $count++;
+        }
+        $itemTableID = $itemCount[$i][0];
 
-    print <<<TABLE
+        print <<<TABLE
     <tr>
         <form method = "post" action = "editItem.php">
             <input type="hidden" name="itemName" id="itemName" value=$itemTableID>
@@ -123,6 +138,7 @@ TABLE;
 <br><br>
 TABLE;
 
+    }
 }
 
 ?>
