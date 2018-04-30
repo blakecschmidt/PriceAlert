@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete An Item</title>
+    <title>Edit An Item</title>
     <link rel = "stylesheet" type = "text/css" href = "./style.css" media = "all">
 </head>
 <body>
@@ -242,7 +242,7 @@ function editForm()
 <table>
 
     <tr>
-        <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName" placeholder=$itemName readonly></td>
+        <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName" placeholder="$itemName" readonly></td>
     </tr>
     
     <tr>
@@ -282,7 +282,7 @@ FORM;
 
     }
     print <<<FORM
-    <input type="hidden" name="itemName" id="itemName" value=$itemName>
+    <input type="hidden" name="itemName" id="itemName" value="$itemName">
     
     <input type="hidden" name="alertPriceCurrent" id="alertPriceCurrent" value=$alertPrice>
     <input type='hidden' name='amazonID' id='amazonID' value=$amazonID>

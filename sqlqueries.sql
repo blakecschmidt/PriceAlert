@@ -6,7 +6,7 @@ password varchar(50)
 
 CREATE TABLE Item (
 itemID INTEGER PRIMARY KEY AUTO_INCREMENT,
-itemName varchar(40),
+itemName varchar(100),
 alertPrice FLOAT
 );
 
@@ -20,6 +20,7 @@ FOREIGN KEY(username) REFERENCES User(username)
 CREATE TABLE itemToRetailer (
 itemID INTEGER PRIMARY KEY,
 retailer varchar(20),
+url varchar(1000),
 currentPrice FLOAT,
 FOREIGN KEY(itemID) REFERENCES Item(itemID)
 );

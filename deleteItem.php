@@ -61,7 +61,6 @@ function delete()
         die("mysqli_connect failed: " . mysqli_connect_error());
     }
 
-    $table_item = "Item";
     $table_itu = "itemToUser";
     $table_itr = "itemToRetailer";
 
@@ -154,7 +153,7 @@ function deleteForm()
 <table>
 
     <tr>
-        <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName" placeholder=$itemName readonly></td>
+        <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName" placeholder="$itemName" readonly></td>
     </tr>
     
     <tr>

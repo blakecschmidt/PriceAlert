@@ -125,12 +125,12 @@ TABLE;
         print <<<TABLE
     <tr>
         <form method = "post" action = "editItem.php">
-            <input type="hidden" name="itemName" id="itemName" value=$itemTableID>
+            <input type="hidden" name="itemName" id="itemName" value="$itemHeaderName">
             <td><input type="submit" value="Edit Item"></td>
         </form>
         
         <form method = "post" action = "deleteItem.php">
-            <input type="hidden" name="itemName" id="itemName" value=$itemTableID>
+            <input type="hidden" name="itemName" id="itemName" value="$itemHeaderName">
             <td><input type="submit" value="Delete Item"></td>
         </form>
     </tr>
