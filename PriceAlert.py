@@ -86,9 +86,9 @@ def getPrice(url, site):
 
 def main():
 
-    print(getPrice("https://www.bestbuy.com/site/nintendo-switch-32gb-console-neon-red-neon-blue-joy-con/5670100.p?skuId=5670100", "Best Buy"))
+    #print(getPrice("https://www.bestbuy.com/site/nintendo-switch-32gb-console-neon-red-neon-blue-joy-con/5670100.p?skuId=5670100", "Best Buy"))
 
-    #sendEmail("Xbox", ["Amazon", "Dell", "Best Buy"], ["400.00", "425.23", "500"], ["https://www.amazon.com/Xbox-One-X-1TB-Console/dp/B074WPGYRF/ref=sr_1_3?s=videogames&ie=UTF8&qid=1524680613&sr=1-3&keywords=xbox+one+x", "url", "url"], ["pricealertnotify@gmail.com", "3qKL^yoc*,Aq6ZmH$rDn", "smtp.gmail.com:587"], "blakecschmidt@gmail.com")
+    sendEmail("Xbox", ["Amazon", "Dell", "Best Buy"], ["400.00", "425.23", "500"], ["https://www.amazon.com/Xbox-One-X-1TB-Console/dp/B074WPGYRF/ref=sr_1_3?s=videogames&ie=UTF8&qid=1524680613&sr=1-3&keywords=xbox+one+x", "url", "url"], ["pricealertnotify@gmail.com", "3qKL^yoc*,Aq6ZmH$rDn", "smtp.gmail.com:587"], "blakecschmidt@gmail.com")
     '''sleepTime = 43200
     config = getConfig('%s/config.json' % os.path.dirname(os.path.realpath(__file__)))
     items = config['items']

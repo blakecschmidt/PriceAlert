@@ -12,11 +12,7 @@ if (empty($connect)) {
     die("mysqli_connect failed: " . mysqli_connect_error());
 }
 
-$stmt_usernames = mysqli_prepare($connect, "SELECT username FROM USER");
-mysqli_stmt_execute($stmt_usernames);
-mysqli_stmt_close($stmt_usernames);
-
-$result = mysqli_query($connect, $stmt_usernames);
+$result = mysqli_query($connect, "SELECT username FROM User");
 $usernames = array();
 
 while ($row = $result->fetch_row()) {
@@ -26,12 +22,7 @@ $result->free();
 
 //For each user
 foreach ($usernames as $user) {
-    $stmt_items = mysqli_prepare($connect, "SELECT itemID, itemName FROM itemToUser JOIN Item ON itemToUser.itemID = Item.itemID WHERE username = (?)");
-    mysqli_stmt_bind_param($stmt_items, 's', $user);
-    mysqli_stmt_execute($stmt_items);
-    mysqli_stmt_close($stmt_items);
-
-    $result = mysqli_query($connect, $stmt_items);
+    $result = mysqli_query($connect, "SELECT Item.itemID, itemName FROM itemToUser JOIN Item ON itemToUser.itemID = Item.itemID WHERE username = '" . $user . "'");
     $itemNameAndIDs = array();
 
     while ($row = $result->fetch_row()) {
@@ -44,12 +35,7 @@ foreach ($usernames as $user) {
     }
     $result->free();
 
-    $stmt_email = mysqli_prepare($connect, "SELECT email FROM User WHERE username = (?)");
-    mysqli_stmt_bind_param($stmt_email, 's', $user);
-    mysqli_stmt_execute($stmt_email);
-    mysqli_stmt_close($stmt_email);
-
-    $result = mysqli_query($connect, $stmt_items);
+    $result = mysqli_query($connect, "SELECT email FROM User WHERE username = '" . $user . "'");
     $row = $result->fetch_row();
     $email = $row[0];
     $result->free();
@@ -61,11 +47,7 @@ foreach ($usernames as $user) {
         $emailInfo = array($itemName, array(), array(), array(), array("pricealertnotify@gmail.com", '3qKL^yoc*,Aq6ZmH$rDn', "smtp.gmail.com:587"), $email);
         //For each ID in set of IDs
         foreach ($nameIDs as $id) {
-            $stmt_id = mysqli_prepare($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE itemID = $id");
-            mysqli_stmt_bind_param($stmt_id, 's', $user);
-            mysqli_stmt_execute($stmt_id);
-            mysqli_stmt_close($stmt_id);
-            $result = mysqli_query($connect, $stmt_id);
+            $result = mysqli_query($connect, "SELECT itemName, alertPrice, retailer, url, currentPrice FROM Item JOIN itemToRetailer ON Item.itemID = itemToRetailer.itemID WHERE itemID = '" . $id . "'");
 
             $row = $result->fetch_row();
             $itemName = $row[0];

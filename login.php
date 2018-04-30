@@ -35,6 +35,7 @@ function redirect($url) {
 if (isset($_POST["logout"])) {
     if (isset($_COOKIE["username"])) {
         unset($_COOKIE["username"]);
+        setcookie('username', '', time() - 3600);
     }
     session_unset();
     session_destroy();
