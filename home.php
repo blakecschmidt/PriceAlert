@@ -39,7 +39,41 @@
                 <h3>Your Dashboard</h3>
 <?php
 	session_start();
+
+    function pullRetailers($userName){
+        $host = "spring-2018.cs.utexas.edu";
+        $user = "bcs2363";
+        $pwd = "4fPUF78Nu~";
+        $dbs = "cs329e_bcs2363";
+        $port = "3306";
+
+        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
+
+        if (empty($connect)) {
+            die("mysqli_connect failed: " . mysqli_connect_error());
+        }
+
+        $result = mysqli_query($connect, "SELECT retailer from itemToUser JOIN itemToRetailer ON itemToUser.itemID = itemToRetailer.itemID WHERE username = '". $userName ."' GROUP BY retailer");
+        return $result;
+    }
 	
+    function pullItemNames($userName){
+        $host = "spring-2018.cs.utexas.edu";
+        $user = "bcs2363";
+        $pwd = "4fPUF78Nu~";
+        $dbs = "cs329e_bcs2363";
+        $port = "3306";
+
+        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
+
+        if (empty($connect)) {
+            die("mysqli_connect failed: " . mysqli_connect_error());
+        }
+
+        $result = mysqli_query($connect, "SELECT itemName from itemToUser JOIN Item ON itemToUser.itemID = Item.itemID WHERE username = '". $userName ."' ");
+        return $result;
+    }
+
     function pullCount($userName){
         $host = "spring-2018.cs.utexas.edu";
         $user = "bcs2363";
@@ -53,10 +87,7 @@
             die("mysqli_connect failed: " . mysqli_connect_error());
         }
 
-        //TODO double check table name is correct
-        $table_u = "itemToUser";
-
-        $result = mysqli_query($connect, "SELECT COUNT(username) from $table_u WHERE username = '". $userName ."' ");
+        $result = mysqli_query($connect, "SELECT COUNT(username) FROM itemToUser WHERE username = '". $userName ."' ");
         $row = $result->fetch_row();
         return $row[0];
     }
@@ -68,13 +99,23 @@
         else {
             $userName = $_COOKIE['username'];
             }
+        $itemNames = pullItemNames($userName);
         $count = pullCount($userName);
-        if ($count == 0) {
-            print("<p>Hello, $userName. You are currently tracking $count items. Start tracking items on the <a href='myItems.php'>My Items</a> page.</p>");
+        $retailers = pullRetailers($userName);
+
+        $str = "Hello, ".$userName.". You are currently tracking ".$count." items: ";
+
+        while ($row = $itemNames->fetch_row()) {
+            $str = $str.$row[0].", ";
         }
-        else {
-        print("<p>Hello, $userName. You are currently tracking $count items. View their status on the <a href='myItems.php'>My Items</a> page.</p>");
+
+        $str = $str."from ";
+
+        while($row = $retailers->fetch_row()) {
+            $str = $str.$row[0].", ";
         }
+
+        print($str);
     }
     else {
         print("<p><a href='login.php'>Log in</a> or <a href='signUp.php'>sign up</a> to begin tracking item sales.</p>");
