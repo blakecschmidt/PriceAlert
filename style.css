@@ -124,6 +124,29 @@ body {
     top: 45px;
 }
 
+.editItems {
+    position: relative;
+    top: 170px;
+    margin: 0 auto;
+    height: 450px;
+    width: 50%;
+}
+
+.editItems h1 {
+    font-family: Georgia;
+    text-align: center;
+}
+
+.editItems p {
+    font-family: Verdana;
+    text-align: center;
+}
+
+.editItemsTable {
+    margin: 0 auto;
+    width: 450px;
+}
+
 .myProfile > * {
     position: relative;
     top:-150px;
