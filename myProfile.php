@@ -32,6 +32,8 @@
         </div>
         <div class="htmlGrab">
 <?php
+    session_start();
+
     function redirect($url) {
     ob_start();
     header("Location: " . $url);

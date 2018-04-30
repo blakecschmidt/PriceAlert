@@ -38,6 +38,8 @@
             <div class="dashboard"> <!--col-md-8 col-centered">-->
                 <h3>Your Dashboard</h3>
 <?php
+	session_start();
+	
     function pullCount($userName){
         $host = "spring-2018.cs.utexas.edu";
         $user = "bcs2363";

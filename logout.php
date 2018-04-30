@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 function redirect($url) {
     ob_start();
@@ -6,8 +7,9 @@ function redirect($url) {
     ob_end_flush();
     die();
     }
-
-setcookie("userName", "", time()-3600);
+if (isset($_COOKIE["username"])) {
+	unset($_COOKIE["username"]);
+}
 session_unset();
 session_destroy();
 redirect("login.php");
