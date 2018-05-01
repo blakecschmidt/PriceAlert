@@ -113,7 +113,7 @@
         	}
         	$result = pullInfo($userName);
        		while($row = $result->fetch_row()) {
-        		$str = $str.$row[0]." - ".$row[1]." retailers tracked - $".$row[2]." alert price<br>";
+        		$str = $str . "<b>" . $row[0] . " - ".$row[1]." retailers tracked - $".$row[2]." alert price</b><br>";
 			}
         	print($str."<br>Click on <a href=\"myItems.php\">My Items</a> to view more information.<p>");
         }

@@ -280,6 +280,11 @@ p.contact {
     padding: 8px;
 }
 
+.dashboard p {
+    text-align: center;
+    font-family: Verdana;
+}
+
 .vidCon{
     width: 77%;
 }
