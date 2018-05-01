@@ -85,7 +85,7 @@ function verifyLogin(){
             session_start();
             $_SESSION['username'] = $userName;
             if(sizeof($stay) == 1){
-                setcookie("username", $userName);
+                setcookie("username", $userName, time()+3600*24*365);
             }
             redirect("home.php");
         }
