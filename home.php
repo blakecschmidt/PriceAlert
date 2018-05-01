@@ -40,6 +40,23 @@
 <?php
 	session_start();
 
+	function pullInfo($userName){
+        $host = "spring-2018.cs.utexas.edu";
+        $user = "bcs2363";
+        $pwd = "4fPUF78Nu~";
+        $dbs = "cs329e_bcs2363";
+        $port = "3306";
+
+        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
+
+        if (empty($connect)) {
+            die("mysqli_connect failed: " . mysqli_connect_error());
+        }
+
+        $result = mysqli_query($connect, "SELECT itemName, COUNT(itemName), alertPrice FROM itemToUser JOIN Item ON itemToUser.itemID = Item.itemID JOIN itemToRetailer ON itemToUser.itemID = itemToRetailer.itemID WHERE username = '". $userName ."' GROUP BY itemName, alertPrice");
+        return $result;
+    }
+
     function pullRetailers($userName){
         $host = "spring-2018.cs.utexas.edu";
         $user = "bcs2363";
@@ -56,23 +73,6 @@
         $result = mysqli_query($connect, "SELECT retailer from itemToUser JOIN itemToRetailer ON itemToUser.itemID = itemToRetailer.itemID WHERE username = '". $userName ."' GROUP BY retailer");
         return $result;
     }
-	
-    function pullItemNames($userName){
-        $host = "spring-2018.cs.utexas.edu";
-        $user = "bcs2363";
-        $pwd = "4fPUF78Nu~";
-        $dbs = "cs329e_bcs2363";
-        $port = "3306";
-
-        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
-
-        if (empty($connect)) {
-            die("mysqli_connect failed: " . mysqli_connect_error());
-        }
-
-        $result = mysqli_query($connect, "SELECT itemName from itemToUser JOIN Item ON itemToUser.itemID = Item.itemID WHERE username = '". $userName ."' ");
-        return $result;
-    }
 
     function pullCount($userName){
         $host = "spring-2018.cs.utexas.edu";
@@ -87,9 +87,9 @@
             die("mysqli_connect failed: " . mysqli_connect_error());
         }
 
-        $result = mysqli_query($connect, "SELECT COUNT(username) FROM itemToUser WHERE username = '". $userName ."' ");
+        $result = mysqli_query($connect, "SELECT itemName, count(distinct(itemName)) FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID WHERE username = '". $userName ."' GROUP BY itemName");
         $row = $result->fetch_row();
-        return $row[0];
+        return $row[1];
     }
 
     if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
@@ -99,23 +99,25 @@
         else {
             $userName = $_COOKIE['username'];
             }
-        $itemNames = pullItemNames($userName);
         $count = pullCount($userName);
-        $retailers = pullRetailers($userName);
 
-        $str = "Hello, ".$userName.". You are currently tracking ".$count." items: ";
-
-        while ($row = $itemNames->fetch_row()) {
-            $str = $str.$row[0].", ";
+        if ($count == 0) {
+        	print("<p>Hello, ".$userName.". You are not currently tracking any items, click on <a href=\"myItems.php\">My Items</a> to start tracking an item.<p>");
+        }
+        else {
+        	if ($count == 1) {
+        		$str = "<p>Hello, ".$userName.". You are currently tracking ".$count." item:<br><br>";
+        	}
+        	else {
+        		$str = "<p>Hello, ".$userName.". You are currently tracking ".$count." items:<br><br>";
+        	}
+        	$result = pullInfo($userName);
+       		while($row = $result->fetch_row()) {
+        		$str = $str.$row[0]." - ".$row[1]." retailers tracked - $".$row[2]." alert price<br>";
+			}
+        	print($str."<br>Click on <a href=\"myItems.php\">My Items</a> to view more information.<p>");
         }
 
-        $str = $str."from ";
-
-        while($row = $retailers->fetch_row()) {
-            $str = $str.$row[0].", ";
-        }
-
-        print($str);
     }
     else {
         print("<p><a href='login.php'>Log in</a> or <a href='signUp.php'>sign up</a> to begin tracking item sales.</p>");

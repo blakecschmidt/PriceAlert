@@ -52,6 +52,7 @@ function verifySignUp(){
     $email = $_POST['email'];
     $password = crypt($_POST['passWord']);
     $userValid = false;
+    $userAlreadyExists = false;
     $passwordValid = false;
     $emailCheck = filter_var($email, FILTER_VALIDATE_EMAIL);
     if ($emailCheck == $email) {
@@ -69,6 +70,7 @@ function verifySignUp(){
 
     if ($userDB != "none"){
         $userValid = false;
+        $userAlreadyExists = true;
     }
     elseif (strlen($username) >= 10 && strlen($username) <= 20){
         if (preg_match("/^[a-zA-Z]+[a-zA-Z0-9]*$/", $username)){
@@ -85,7 +87,13 @@ function verifySignUp(){
     }
 
     if ($userValid == false || $passwordValid == false || $emailValid == false){
-        print("<p class='pageStrt'>Username or password invalid. <a href='signUp.php'>Return to sign up form.</a><p>");
+
+        if ($userAlreadyExists) {
+            print("<p class='pageStrt'>Username already exists. <a href='signUp.php'>Return to sign up form.</a><p>");
+        }
+        else {
+            print("<p class='pageStrt'>Username or password invalid. <a href='signUp.php'>Return to sign up form.</a><p>");
+        }
     }
     else{
         $stmt2 = mysqli_prepare($connect, "INSERT into $table_u (username, email, password) VALUES (?, ?, ?)");
