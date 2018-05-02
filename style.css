@@ -352,7 +352,7 @@ p.contact {
     top: 80px;
     border: 4px solid dodgerblue;
     width: 200px;
-    height: 260px;
+    height: 280px;
     margin: auto;
     padding: 8px;
     text-align: center;
@@ -374,7 +374,7 @@ p.contact {
 
 .signUpInstructions1{
     position: relative;
-    top:-220px;
+    top:-360px;
     left: 250px;
     border: 4px solid dodgerblue;
     margin-bottom: 5px;
@@ -384,7 +384,7 @@ p.contact {
 }
 .signUpInstructions2{
     position: relative;
-    top:-40px;
+    top:-180px;
     left: -250px;
     border: 4px solid dodgerblue;
     margin-bottom: 5px;
