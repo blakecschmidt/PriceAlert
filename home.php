@@ -87,9 +87,12 @@
             die("mysqli_connect failed: " . mysqli_connect_error());
         }
 
-        $result = mysqli_query($connect, "SELECT itemName, count(distinct(itemName)) FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID WHERE username = '". $userName ."' GROUP BY itemName");
-        $row = $result->fetch_row();
-        return $row[1];
+        $result = mysqli_query($connect, "SELECT itemName FROM Item JOIN itemToUser ON Item.itemID = itemToUser.itemID WHERE username = '". $userName ."' GROUP BY itemName");
+        $count = 0;
+        while ($row = $result->fetch_row()){
+        	$count = $count + 1;
+        }
+        return $count;
     }
 
     if (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
