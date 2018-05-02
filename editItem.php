@@ -330,12 +330,18 @@ FORM;
 </form>
 FORM;
 }
-?>
-</div>
+print "</div>";
+
+$date = date('l\, F jS\, Y');
+
+print <<<FOOTER
 <footer>
     <div class="footer">
-        <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
+        <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
     </div>
 </footer>
+FOOTER;
+?>
+
 </body>
 </html>

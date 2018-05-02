@@ -132,32 +132,35 @@ START;
     else {
         print("<p><a href='login.php'>Log in</a> or <a href='signUp.php'>sign up</a> to begin tracking item sales.</p>");
     }
-?>
-            </div>
-        <!--</div>-->
-        <br />
-        <div class="vidCon col-centered"><!--row>-->
-            <!--<div class="col-md-8 col-centered">
-                <div class="row">-->
-                    <div class="video col-md-6">
-                        <p>*The training video for how to get started with Price Alert would go here*</p>
-                    </div>
-                    <div class="vidText col-md-4">
-                        <p>
-                            Watch the video to the left for help getting started with Price Alert.
-                            In this video, one of the members of the Price Alert team will walk through account creation as well as tracking your first item.
-                        </p>
-                    </div>
-                <!--</div>
-            </div>-->
+    print "</div>";
+
+	print <<<VIDEO
+    <br>
+    <div class="vidCon col-centered">
+        <div class="video col-md-6">
+            <p>*The training video for how to get started with Price Alert would go here*</p>
+        </div>
+        <div class="vidText col-md-4">
+            <p>
+                Watch the video to the left for help getting started with Price Alert.
+                In this video, one of the members of the Price Alert team will walk through account creation as well as tracking your first item.
+            </p>
         </div>
     </div>
+VIDEO;
 
-    <footer>
-        <div class="footer">
-            <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
-        </div>
-    </footer>
+	$date = date('l\, F jS\, Y');
+
+	print <<<FOOTER
+<footer>
+    <div class="footer">
+        <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
+    </div>
+</footer>
+FOOTER;
+
+
+?>
 
 </body>
 </html>

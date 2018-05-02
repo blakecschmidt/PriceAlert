@@ -163,18 +163,23 @@ TABLE;
 </table>
 <br><br>
 TABLE;
-
     }
 }
 
-?>
-</div>
+print "</div>";
 
-<footer class="myItemsFooter">
-    <div>
-        <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
+$date = date('l\, F jS\, Y');
+
+print <<<FOOTER
+<footer>
+    <div class="footer">
+        <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
     </div>
 </footer>
+FOOTER;
+
+?>
+
 </body>
 </html>
 

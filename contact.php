@@ -49,8 +49,7 @@ HEADER;
 HEADER;
 }
 
-?>
-
+print <<<CONTACT
 <div>
     <h1 class="contact">Contact Us</h1>
 
@@ -58,11 +57,20 @@ HEADER;
         The developers who have brought you Price Alert are Blake Schmidt, Ben Luzarraga and Kyle Gruber. We are all software developers with multiple years of experience who are currently students at the University of Texas at Austin. Ben has taken up a software developer offer at IBM, Blake at The Home Depot, and Kyle at Citi. For any questions you may have regarding this site, please feel free to <a href="mailto:blakeschmidt@utexas.edu">email us</a>.
     </p>
 </div>
+CONTACT;
+
+
+$date = date('l\, F jS\, Y');
+
+print <<<FOOTER
 <footer>
     <div class="footer">
-        <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
+        <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
     </div>
 </footer>
+FOOTER;
+
+?>
 
 </body>
 </html>

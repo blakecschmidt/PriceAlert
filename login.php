@@ -57,19 +57,7 @@ HEADER;
 HEADER;
 }
 
-if (isset($_POST["logout"])) {
-    if (isset($_COOKIE["username"])) {
-        unset($_COOKIE["username"]);
-        setcookie('username', '', time() - 3600);
-    }
-    session_unset();
-    session_destroy();
-    redirect("./login.php");
-    return;
-} elseif (isset($_SESSION['username']) || isset($_COOKIE['username'])) {
-    logoutForm();
-}
-elseif ($_POST['userName'] == "" || $_POST['passWord'] == ""){
+if ($_POST['userName'] == "" || $_POST['passWord'] == ""){
     loginForm();
 }
 elseif ($_POST['userName'] != "" && $_POST['passWord'] != ""){
@@ -124,27 +112,6 @@ function verifyLogin(){
     mysqli_close($connect);
 }
 
-function logoutForm()
-{
-    print <<<logoutForm
-    <div class="wrapper">
-        <div class="logIn">
-            <form action = "" method = "post">
-                <table>
-                    <tr>
-                        <td>You are already logged in, click "Log Out" to log out.</td>
-                    </tr>
-                    <input type="hidden" name="logout" value="true">
-                    <tr>
-                        <td><input type = "submit" value = "Log Out"></td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-    </div>
-logoutForm;
-}
-
 function loginForm()
 {
     print <<<loginForm
@@ -178,12 +145,17 @@ function loginForm()
 loginForm;
 }
 
+$date = date('l\, F jS\, Y');
+
+print <<<FOOTER
+<footer>
+    <div class="footer">
+        <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
+    </div>
+</footer>
+FOOTER;
 
 ?>
-    <footer>
-        <div class="footer">
-            <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
-        </div>
-    </footer>
+
 </body>
 </html>

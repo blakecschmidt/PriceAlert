@@ -241,40 +241,48 @@ INFO;
     redirect("login.php");
     return;
 }
+
+print "</div>";
+print "</div>";
+
+$date = date('l\, F jS\, Y');
+
+print <<<FOOTER
+<footer>
+    <div class="footer">
+        <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
+    </div>
+</footer>
+FOOTER;
+
 ?>
-        </div>
-        </div>
 
-    <footer>
-        <div class="footer">
-            <p>Friday, March 23rd, 2018.<br>Website created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
-        </div>
-    </footer>
-    <script>
-        var myPersonalInfoDiv = document.getElementsByClassName("myPersonalInfo")[0];
-        var mySecurityDiv = document.getElementsByClassName("mySecurity")[0];
-        var mySettingsDiv = document.getElementsByClassName("mySettings")[0];
-        var personalInfoButton = document.getElementById("personalInfo");
-        var securityButton = document.getElementById("security");
-        var settingsButton = document.getElementById("settings");
+<script>
+    var myPersonalInfoDiv = document.getElementsByClassName("myPersonalInfo")[0];
+    var mySecurityDiv = document.getElementsByClassName("mySecurity")[0];
+    var mySettingsDiv = document.getElementsByClassName("mySettings")[0];
+    var personalInfoButton = document.getElementById("personalInfo");
+    var securityButton = document.getElementById("security");
+    var settingsButton = document.getElementById("settings");
 
-        personalInfoButton.onclick = function() {
-            myPersonalInfoDiv.style.display = "block";
-            mySecurityDiv.style.display = "none";
-            mySettingsDiv.style.display = "none";
-        }
+    personalInfoButton.onclick = function() {
+        myPersonalInfoDiv.style.display = "block";
+        mySecurityDiv.style.display = "none";
+        mySettingsDiv.style.display = "none";
+    };
 
-        securityButton.onclick = function() {
-            myPersonalInfoDiv.style.display = "none";
-            mySecurityDiv.style.display = "block";
-            mySettingsDiv.style.display = "none";
-        }
+    securityButton.onclick = function() {
+        myPersonalInfoDiv.style.display = "none";
+        mySecurityDiv.style.display = "block";
+        mySettingsDiv.style.display = "none";
+    };
 
-        settingsButton.onclick = function() {
-            myPersonalInfoDiv.style.display = "none";
-            mySecurityDiv.style.display = "none";
-            mySettingsDiv.style.display = "block";
-        }
-    </script>
+    settingsButton.onclick = function() {
+        myPersonalInfoDiv.style.display = "none";
+        mySecurityDiv.style.display = "none";
+        mySettingsDiv.style.display = "block";
+    };
+</script>
+
 </body>
 </html>
