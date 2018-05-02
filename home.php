@@ -57,23 +57,6 @@
         return $result;
     }
 
-    function pullRetailers($userName){
-        $host = "spring-2018.cs.utexas.edu";
-        $user = "bcs2363";
-        $pwd = "4fPUF78Nu~";
-        $dbs = "cs329e_bcs2363";
-        $port = "3306";
-
-        $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
-
-        if (empty($connect)) {
-            die("mysqli_connect failed: " . mysqli_connect_error());
-        }
-
-        $result = mysqli_query($connect, "SELECT retailer from itemToUser JOIN itemToRetailer ON itemToUser.itemID = itemToRetailer.itemID WHERE username = '". $userName ."' GROUP BY retailer");
-        return $result;
-    }
-
     function pullCount($userName){
         $host = "spring-2018.cs.utexas.edu";
         $user = "bcs2363";
