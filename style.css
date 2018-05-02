@@ -105,6 +105,11 @@ body {
     text-align: center;
 }
 
+.addItems p {
+    font-family: Verdana;
+    text-align: center;
+}
+
 .addItemsTable {
     margin: 0 auto;
     width: 450px;

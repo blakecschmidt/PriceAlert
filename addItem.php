@@ -73,8 +73,47 @@ if (isset($_POST) && $_POST["itemName"] != "" && $_POST["alertPrice"] != "" && s
     insertForm();
 }
 
+function checkURL ($str)
+{
+    return preg_match("/(((http|ftp|https):\/{2})+(([0-9a-z_-]+\.)+(aero|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mn|mn|mo|mp|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|nom|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ra|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw|arpa)(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imuS", $str);
+}
+
+function urlError() {
+    print <<<ERROR
+<p>One or more of the URLs has been entered incorrectly. Be sure to include the full URL exactly as it is shown in the address bar. Please return to My Items and try again.</p>
+<p><a href='myItems.php'>Back to My Items</a></p>
+ERROR;
+
+}
+
+function priceError() {
+    print <<<ERROR
+<p>The alert price you have set is invalid. Please return to My Items and try again.</p>
+<p><a href='myItems.php'>Back to My Items</a></p>
+ERROR;
+
+}
+
 function insert()
 {
+
+    $amazonURL = $_POST["amazonURL"];
+    $bestbuyURL = $_POST["bestbuyURL"];
+    $dellURL = $_POST["dellURL"];
+    $walmartURL = $_POST["walmartURL"];
+    $targetURL = $_POST["targetURL"];
+
+    if (($amazonURL != "" && !checkURL($amazonURL)) || ($bestbuyURL != "" && !checkURL($bestbuyURL)) || ($dellURL != "" && !checkURL($dellURL)) || ($walmartURL != "" && !checkURL($walmartURL)) || ($targetURL != "" && !checkURL($targetURL))) {
+        urlError();
+        return;
+    }
+
+    if (is_numeric($_POST["alertPrice"]) && $_POST["alertPrice"] != 0) {
+        $alertPrice = (float) $_POST["alertPrice"];
+    } else {
+        priceError();
+        return;
+    }
 
     $host = "spring-2018.cs.utexas.edu";
     $user = "bcs2363";
@@ -98,20 +137,19 @@ function insert()
         $username = $_SESSION["username"];
     }
     $itemName = $_POST["itemName"];
-    $alertPrice = $_POST["alertPrice"];
     $retailers = $_POST["retailer"];
 
     foreach ($retailers as $retailer) {
         if ($retailer == "Amazon") {
-            $url = $_POST["amazonURL"];
+            $url = $amazonURL;
         } elseif ($retailer == "Best Buy") {
-            $url = $_POST["bestbuyURL"];
+            $url = $bestbuyURL;
         } elseif ($retailer == "Dell") {
-            $url = $_POST["dellURL"];
+            $url = $dellURL;
         } elseif ($retailer == "Walmart") {
-            $url = $_POST["walmartURL"];
+            $url = $walmartURL;
         } elseif ($retailer == "Target") {
-            $url = $_POST["targetURL"];
+            $url = $targetURL;
         } else {
             $url = "none";
         }
