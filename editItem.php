@@ -6,6 +6,19 @@
     <link rel = "stylesheet" type = "text/css" href = "./style.css" media = "all">
 </head>
 <body>
+
+<?php
+session_start();
+
+function redirect($url) {
+    ob_start();
+    header("Location: " . $url);
+    ob_end_flush();
+    die();
+}
+
+if (!isset($_SESSION["username"]) && !isset($_COOKIE["username"])) {
+    print <<<HEADER
 <header>
     <div class="header">
         <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
@@ -17,23 +30,38 @@
             <li><a id="home" href="home.php">Home</a></li>
             <li><a href="myItems.php">My Items</a></li>
             <li><a href="myProfile.php">My Profile</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
             <li><a href="login.php">Log In</a></li>
         </ul>
     </div>
 </header>
+HEADER;
+} else {
+    print <<<HEADER
+<header>
+    <div class="header">
+        <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
+        <h1>Price Alert</h1>
+    </div>
+
+    <div class="navBar">
+        <ul>
+            <li><a id="home" href="home.php">Home</a></li>
+            <li><a href="myItems.php">My Items</a></li>
+            <li><a href="myProfile.php">My Profile</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="logout.php">Log Out</a></li>
+        </ul>
+    </div>
+</header>
+HEADER;
+}
+
+print <<<H1
 <div class="editItems">
 <h1>Edit An Item</h1>
+H1;
 
-<?php
-session_start();
-
-function redirect($url) {
-    ob_start();
-    header("Location: " . $url);
-    ob_end_flush();
-    die();
-}
 
 if (!isset($_COOKIE["username"]) && !isset($_SESSION["username"])) {
     redirect("./login.php");

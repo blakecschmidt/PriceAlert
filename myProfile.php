@@ -6,31 +6,7 @@
     <link rel = "stylesheet" type = "text/css" href = "./style.css" media = "all">
 </head>
 <body>
-    <header>
-        <div class="header">
-            <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
-            <h1>Price Alert</h1>
-        </div>
 
-        <div class="navBar">
-            <ul>
-                <li><a id="home" href="home.php">Home</a></li>
-                <li><a href="myItems.php">My Items</a></li>
-                <li><a href="myProfile.php">My Profile</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="login.php">Log In</a></li>
-            </ul>
-        </div>
-    </header>
-    <div class="myProfile">
-        <div class="myProfileSideBar">
-            <ul>
-                <li><button id="personalInfo">Personal Info</button></li>
-                <li><button id="security">Security</button></li>
-                <li><button id="settings">Settings</button></li>
-            </ul>
-        </div>
-        <div class="htmlGrab">
 <?php
     session_start();
 
@@ -40,6 +16,58 @@
     ob_end_flush();
     die();
     }
+
+if (!isset($_SESSION["username"]) && !isset($_COOKIE["username"])) {
+    print <<<HEADER
+<header>
+    <div class="header">
+        <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
+        <h1>Price Alert</h1>
+    </div>
+
+    <div class="navBar">
+        <ul>
+            <li><a id="home" href="home.php">Home</a></li>
+            <li><a href="myItems.php">My Items</a></li>
+            <li><a href="myProfile.php">My Profile</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="login.php">Log In</a></li>
+        </ul>
+    </div>
+</header>
+HEADER;
+} else {
+    print <<<HEADER
+<header>
+    <div class="header">
+        <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
+        <h1>Price Alert</h1>
+    </div>
+
+    <div class="navBar">
+        <ul>
+            <li><a id="home" href="home.php">Home</a></li>
+            <li><a href="myItems.php">My Items</a></li>
+            <li><a href="myProfile.php">My Profile</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="logout.php">Log Out</a></li>
+        </ul>
+    </div>
+</header>
+HEADER;
+}
+
+print <<<H1
+<div class="myProfile">
+        <div class="myProfileSideBar">
+            <ul>
+                <li><button id="personalInfo">Personal Info</button></li>
+                <li><button id="security">Security</button></li>
+                <li><button id="settings">Settings</button></li>
+            </ul>
+        </div>
+        <div class="htmlGrab">
+H1;
 
     function pullEmail($userName){
         $host = "spring-2018.cs.utexas.edu";

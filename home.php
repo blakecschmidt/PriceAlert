@@ -6,39 +6,63 @@
     <link rel = "stylesheet" type = "text/css" href = "./style.css" media = "all">
 </head>
 <body>
-    <header>
-        <div class="header">
-            <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
-            <h1>Price Alert</h1>
-        </div>
-
-        <div class="navBar">
-            <ul>
-                <li><a id="home" href="home.php">Home</a></li>
-                <li><a href="myItems.php">My Items</a></li>
-                <li><a href="myProfile.php">My Profile</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="login.php">Log In</a></li>
-            </ul>
-        </div>
-    </header>
-
-    <div class="pageStrt">
-        <!--<div class="row">-->
-            <div class="about"><!--col-md-8 col-centered">-->
-                <h3>About Price Alert</h3>
-                <p>
-                    Price Alert is a site that tracks items offered by multiple retailers and notifies the user of a price drop.
-                    Watch the video below to create an account and get started.
-                </p>
-            </div>
-        <!--</div>-->
-        <br />
-        <!--<div class="row">-->
-            <div class="dashboard"> <!--col-md-8 col-centered">-->
-                <h3>Your Dashboard</h3>
 <?php
-	session_start();
+
+session_start();
+
+if (!isset($_SESSION["username"]) && !isset($_COOKIE["username"])) {
+    print <<<HEADER
+<header>
+    <div class="header">
+        <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
+        <h1>Price Alert</h1>
+    </div>
+
+    <div class="navBar">
+        <ul>
+            <li><a id="home" href="home.php">Home</a></li>
+            <li><a href="myItems.php">My Items</a></li>
+            <li><a href="myProfile.php">My Profile</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="login.php">Log In</a></li>
+        </ul>
+    </div>
+</header>
+HEADER;
+} else {
+    print <<<HEADER
+<header>
+    <div class="header">
+        <a href="home.php"><img id="logo" src="logo.png" alt="Price Alert Logo"></a>
+        <h1>Price Alert</h1>
+    </div>
+
+    <div class="navBar">
+        <ul>
+            <li><a id="home" href="home.php">Home</a></li>
+            <li><a href="myItems.php">My Items</a></li>
+            <li><a href="myProfile.php">My Profile</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="logout.php">Log Out</a></li>
+        </ul>
+    </div>
+</header>
+HEADER;
+}
+
+print <<<START
+<div class="pageStrt">
+        <div class="about">
+            <h3>About Price Alert</h3>
+            <p>
+                Price Alert is a site that tracks items offered by multiple retailers and notifies the user of a price drop.
+                Watch the video below to create an account and get started.
+            </p>
+        </div>
+    <br>
+        <div class="dashboard">
+            <h3>Your Dashboard</h3>
+START;
 
 	function pullInfo($userName){
         $host = "spring-2018.cs.utexas.edu";
