@@ -6,7 +6,7 @@ body {
 .header {
     background-color: dodgerblue;
     position: relative;
-    top: 0px;
+    top: 0;
     height: 120px;
     width: 100%;
 }
@@ -62,7 +62,7 @@ body {
     position: relative;
     top: 80px;
     margin: 0 auto;
-    height: 800px;
+    height: auto;
     width: 75%;
 }
 
@@ -243,6 +243,7 @@ p.contact {
     position: absolute;
     top: 160px;
     margin: 0 auto;
+    height: auto;
 }
 
 .myItemStrt{
@@ -278,6 +279,7 @@ p.contact {
     margin-top: 5px;
     margin-bottom: 5px;
     margin: 0 auto;
+    height: auto;
     width: 75%;
     padding: 8px;
 }
@@ -319,17 +321,17 @@ p.contact {
     text-align: center;
 }
 
-.footer {
+footer {
     border-top: 4px solid dodgerblue;
     position: absolute;
-    top: 685px;
+    bottom: 0;
     height: 120px;
     width: 100%;
     background-color: dodgerblue;
     color: white;
 }
 
-.footer p {
+footer p {
     text-align: center;
     position: relative;
     top: 45px;

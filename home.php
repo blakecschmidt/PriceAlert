@@ -152,6 +152,7 @@ VIDEO;
 	$date = date('l\, F jS\, Y');
 
 	print <<<FOOTER
+</div>
 <footer>
     <div class="footer">
         <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
