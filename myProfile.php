@@ -171,14 +171,20 @@ H1;
 
         if (isset($_POST['newEmail']) && $_POST['newEmail'] != '') {
             if ($_POST['newEmail'] != $userEmail) {
-                setEmail($userName, $_POST['newEmail']);
+            	$emailCheck = filter_var($_POST['newEmail'], FILTER_VALIDATE_EMAIL);
+            	if ($emailCheck == $_POST['newEmail']) {
+            		setEmail($userName, $_POST['newEmail']);
+            	}
             }
             redirect("myProfile.php");
         }
         elseif ((isset($_POST['oldPassword']) && $_POST['oldPassword'] != '') && (isset($_POST['newPassword']) && $_POST['newPassword'] != '')){
-            //!!!!!!
             if (crypt($_POST['oldPassword'], $userPassword) == $userPassword) {
-                setPassword($userName, crypt($_POST['newPassword']));
+            	if (strlen($_POST['oldPassword']) >= 10 && strlen($_POST['oldPassword']) <= 20){
+            		if (preg_match('/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/', $_POST['oldPassword'])){
+            			setPassword($userName, crypt($_POST['newPassword']));
+        			}
+    			}
             }
             redirect("myProfile.php");
         }
@@ -189,7 +195,7 @@ H1;
                 <form action = "" method = "post">
                     <table>
                         <tr>
-                            <td><label for = "oldEmail">Old Email:</label></td>
+                            <td><label for = "oldEmail">Current Email:</label></td>
                         </tr>
                         <tr>
                             <td><input type = "text" name = "oldEmail" id = "oldEmail" value = "$userEmail"></td>
@@ -211,7 +217,7 @@ H1;
             <form action = "" method = "post">
                     <table>
                         <tr>
-                            <td><label for = "oldPassword">Old Password:</label></td>
+                            <td><label for = "oldPassword">Current Password:</label></td>
                         </tr>
                         <tr>
                             <td><input type = "password" name = "oldPassword" id = "oldPassword""></td>
