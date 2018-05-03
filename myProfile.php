@@ -124,6 +124,8 @@ H1;
             die("mysqli_connect failed: " . mysqli_connect_error());
         }
 
+        $userEmail = mysqli_real_escape_string($connect, $userEmail);
+
         //TODO double check table name is correct
         $table_u = "User";
 
@@ -146,6 +148,8 @@ H1;
         if (empty($connect)) {
             die("mysqli_connect failed: " . mysqli_connect_error());
         }
+
+        $password = mysqli_real_escape_string($connect, $password);
 
         //TODO double check table name is correct
         $table_u = "User";
