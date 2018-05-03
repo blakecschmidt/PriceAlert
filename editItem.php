@@ -89,17 +89,6 @@ ERROR;
 
 function edit() {
 
-    $amazonURL = $_POST["amazonURL"];
-    $bestbuyURL = $_POST["bestbuyURL"];
-    $dellURL = $_POST["dellURL"];
-    $walmartURL = $_POST["walmartURL"];
-    $targetURL = $_POST["targetURL"];
-
-    if (($amazonURL != "" && !checkURL($amazonURL)) || ($bestbuyURL != "" && !checkURL($bestbuyURL)) || ($dellURL != "" && !checkURL($dellURL)) || ($walmartURL != "" && !checkURL($walmartURL)) || ($targetURL != "" && !checkURL($targetURL))) {
-        urlError();
-        return;
-    }
-
     $host = "spring-2018.cs.utexas.edu";
     $user = "bcs2363";
     $pwd = "4fPUF78Nu~";
@@ -110,6 +99,18 @@ function edit() {
 
     if (empty($connect)) {
         die("mysqli_connect failed: " . mysqli_connect_error());
+    }
+
+    $amazonURL = mysqli_real_escape_string($connect, $_POST["amazonURL"]);
+    $bestbuyURL = mysqli_real_escape_string($connect, $_POST["bestbuyURL"]);
+    $dellURL = mysqli_real_escape_string($connect, $_POST["dellURL"]);
+    $walmartURL = mysqli_real_escape_string($connect, $_POST["walmartURL"]);
+    $targetURL = mysqli_real_escape_string($connect, $_POST["targetURL"]);
+
+    if (($amazonURL != "" && !checkURL($amazonURL)) || ($bestbuyURL != "" && !checkURL($bestbuyURL)) || ($dellURL != "" && !checkURL($dellURL)) || ($walmartURL != "" && !checkURL($walmartURL)) || ($targetURL != "" && !checkURL($targetURL))) {
+        urlError();
+        mysqli_close($connect);
+        return;
     }
 
     $table_item = "Item";
@@ -135,7 +136,7 @@ function edit() {
     $itemRetailersAndURLsToInsert = array();
 
     if (is_numeric($_POST["alertPrice"]) && $_POST["alertPrice"] != 0) {
-        $alertPrice = (float) $_POST["alertPrice"];
+        $alertPrice = (float) mysqli_real_escape_string($connect, $_POST["alertPrice"]);;
     } else {
         $alertPrice = (float) $_POST["alertPriceCurrent"];
     }
