@@ -101,11 +101,11 @@ function edit() {
         die("mysqli_connect failed: " . mysqli_connect_error());
     }
 
-    $amazonURL = mysqli_real_escape_string($connect, $_POST["amazonURL"]);
-    $bestbuyURL = mysqli_real_escape_string($connect, $_POST["bestbuyURL"]);
-    $dellURL = mysqli_real_escape_string($connect, $_POST["dellURL"]);
-    $walmartURL = mysqli_real_escape_string($connect, $_POST["walmartURL"]);
-    $targetURL = mysqli_real_escape_string($connect, $_POST["targetURL"]);
+    $amazonURL = mysqli_real_escape_string($connect, strip_tags($_POST["amazonURL"]));
+    $bestbuyURL = mysqli_real_escape_string($connect, strip_tags($_POST["bestbuyURL"]));
+    $dellURL = mysqli_real_escape_string($connect, strip_tags($_POST["dellURL"]));
+    $walmartURL = mysqli_real_escape_string($connect, strip_tags($_POST["walmartURL"]));
+    $targetURL = mysqli_real_escape_string($connect, strip_tags($_POST["targetURL"]));
 
     if (($amazonURL != "" && !checkURL($amazonURL)) || ($bestbuyURL != "" && !checkURL($bestbuyURL)) || ($dellURL != "" && !checkURL($dellURL)) || ($walmartURL != "" && !checkURL($walmartURL)) || ($targetURL != "" && !checkURL($targetURL))) {
         urlError();
@@ -136,7 +136,7 @@ function edit() {
     $itemRetailersAndURLsToInsert = array();
 
     if (is_numeric($_POST["alertPrice"]) && $_POST["alertPrice"] != 0) {
-        $alertPrice = (float) mysqli_real_escape_string($connect, $_POST["alertPrice"]);;
+        $alertPrice = (float) mysqli_real_escape_string($connect, strip_tags($_POST["alertPrice"]));;
     } else {
         $alertPrice = (float) $_POST["alertPriceCurrent"];
     }
