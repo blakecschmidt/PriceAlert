@@ -198,7 +198,7 @@ H1;
                             <td><label for = "newEmail">New Email:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "newEmail" id = "newEmail"></td>
+                            <td><input type = "text" name = "newEmail" id = "newEmail" maxlength = "40"></td>
                         </tr>
                         <tr>
                             <td><input type = "submit" value = "Save"><input type = "reset" value = "Reset"></td>

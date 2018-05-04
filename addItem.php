@@ -195,7 +195,7 @@ function insertForm()
     <table>
     
         <tr>
-            <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName"></td>
+            <td><label for="itemName">Item Name: </label></td><td><input type="text" name="itemName" id="itemName" maxlength = "100"></td>
         </tr>
         
         <tr>
@@ -204,27 +204,27 @@ function insertForm()
         
         <tr>
             <td><input type="checkbox" name="retailer[]" value="Amazon" id="amazon"></td><td><label for="amazon"> Amazon</label></td>
-            <td><input type="text" name="amazonURL" id="amazonURL" placeholder="Product Page URL"></td>
+            <td><input type="text" name="amazonURL" id="amazonURL" placeholder="Product Page URL" maxlength = "1000"></td>
         </tr>
         
         <tr>
             <td><input type="checkbox" name="retailer[]" value="Best Buy" id="bestbuy"></td><td><label for="bestbuy"> Best Buy</label></td>
-            <td><input type="text" name="bestbuyURL" id="bestbuyURL" placeholder="Product Page URL"></td>
+            <td><input type="text" name="bestbuyURL" id="bestbuyURL" placeholder="Product Page URL" maxlength = "1000"></td>
         </tr>
         
         <tr>
             <td><input type="checkbox" name="retailer[]" value="Dell" id="dell"></td><td><label for="dell"> Dell</label></td>
-            <td><input type="text" name="dellURL" id="dellURL" placeholder="Product Page URL"></td>
+            <td><input type="text" name="dellURL" id="dellURL" placeholder="Product Page URL" maxlength = "1000"></td>
         </tr>
         
         <tr>
             <td><input type="checkbox" name="retailer[]" value="Walmart" id="walmart"></td><td><label for="walmart"> Walmart</label></td>
-            <td><input type="text" name="walmartURL" id="walmartURL" placeholder="Product Page URL"></td>
+            <td><input type="text" name="walmartURL" id="walmartURL" placeholder="Product Page URL" maxlength = "1000"></td>
         </tr>
         
         <tr>
             <td><input type="checkbox" name="retailer[]" value="Target" id="target"></td><td><label for="target"> Target</label></td>
-            <td><input type="text" name="targetURL" id="targetURL" placeholder="Product Page URL"></td>
+            <td><input type="text" name="targetURL" id="targetURL" placeholder="Product Page URL" maxlength = "1000"></td>
         </tr>
         
         <tr><td><input type="submit" value="Submit"></td><td><input type="reset" value="Clear"></td></tr>

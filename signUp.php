@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Price Alert</title>
     <link rel = "stylesheet" type = "text/css" href = "./style.css" media = "all">
+    <script type ="text/javascript" src = "signupAJAX.js"></script>
 </head>
 <body>
 <header>
@@ -28,8 +29,7 @@ if((isset($_POST['userName'])&& $_POST['userName'] != '')
     &&(isset($_POST['passWord']) && $_POST['passWord'] != '')
     &&(isset($_POST['email']) && $_POST['email'] != '')){
     verifySignUp();
-}
-else{
+} else {
     signUpForm();
 }
 
@@ -116,13 +116,13 @@ function signUpForm(){
                             <td><label for = "userName">User Name:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "text" name = "userName" id = "userName"></td>
+                            <td><input type = "text" name = "userName" id = "userName" maxlength = "20"></td>
                         </tr>
                         <tr>
                             <td><label for = "email">Email:</label></td>
                         </tr>
                         <tr>
-                            <td><input type = "email" name = "email" id = "email"></td>
+                            <td><input type = "email" name = "email" id = "email" maxlength = "40"></td>
                         </tr>
                         <tr>
                             <td><label for = "passWord">Password:</label></td>
