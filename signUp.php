@@ -192,7 +192,7 @@ function signUpForm(){
                             <td><input type = "password" name = "repeatPassWord" id = "repeatPassWord"></td>
                         </tr>
                         <tr>
-                            <td><input type = "submit" value = "Sign Up"><input type = "reset" value = "Reset"></td>
+                            <td><input onsubmit="validation()" type = "submit" value = "Sign Up"><input type = "reset" value = "Reset"></td>
                         </tr>
                     </table>
                 </form>
@@ -233,31 +233,35 @@ FOOTER;
 
 ?>
 <script type="text/javascript">
-var username = document.getElementById("userName");
-var password = document.getElementById("passWord");
-var repeatPassword = document.getElementById("repeatPassWord");
-var validLogin = true;
-var userRegEx = "/^[a-zA-Z]+[a-zA-Z0-9]*$/";
-var passRegEx = '/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/';
-if (username.value.length < 10 || username.value.length > 20){
-    validLogin = false;
-}
-else if(!userRegEx.test(username.value)){
-    validLogin = false;
-}
-if (password.value.length < 10 || password.value.length > 20){
-    validLogin = false;
-}
-else if(!passRegEx.test(password)){
-    validLogin = false;
-}
-else if(password !== repeatPassword) {
-    validLogin = false;
-}
+    function validation(){
+        var username = document.getElementById("userName");
+        var password = document.getElementById("passWord");
+        var repeatPassword = document.getElementById("repeatPassWord");
+        var validLogin = true;
+        var userRegEx = "/^[a-zA-Z]+[a-zA-Z0-9]*$/";
+        var passRegEx = '/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/';
 
-if(validLogin===false){
-    window.alert("Error. Username or Password invalid.")
-}
+        if (username.value.length < 10 || username.value.length > 20){
+            validLogin = false;
+        }
+        else if(!userRegEx.test(username.value)){
+            validLogin = false;
+        }
+        if (password.value.length < 10 || password.value.length > 20){
+            validLogin = false;
+        }
+        else if(!passRegEx.test(password)){
+            validLogin = false;
+        }
+        else if(password !== repeatPassword) {
+            validLogin = false;
+        }
+
+        if(validLogin===false){
+            window.alert("Error. Username or Password invalid.")
+        }
+    })
+
 
 </script>
 </body>
