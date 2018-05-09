@@ -23,15 +23,70 @@
         </ul>
     </div>
 </header>
+<div class="wrapper">
+    <div class="signUp">
+        <form action = "" method = "post">
+            <table>
+                <tr>
+                    <td><label for = "userName">User Name:</label></td>
+                </tr>
+                <tr>
+                    <td><input type = "text" name = "userName" id = "userName" maxlength = "20"></td>
+                </tr>
+                <tr>
+                    <td><label for = "email">Email:</label></td>
+                </tr>
+                <tr>
+                    <td><input type = "email" name = "email" id = "email" maxlength = "40"></td>
+                </tr>
+                <tr>
+                    <td><label for = "passWord">Password:</label></td>
+                </tr>
+                <tr>
+                    <td><input type = "password" name = "passWord" id = "passWord"></td>
+                </tr>
+                <tr>
+                    <td><label for = "repeatPassWord">Repeat Password:</label></td>
+                </tr>
+                <tr>
+                    <td><input type = "password" name = "repeatPassWord" id = "repeatPassWord"></td>
+                </tr>
+                <tr>
+                    <td><input type = "submit" value = "Sign Up"><input type = "reset" value = "Reset"></td>
+                </tr>
+            </table>
+        </form>
+        <p><a href="login.php">Already have an account? Log in here.</a></p>
+    </div>
+    <div class="signUpInstructions2">
+        User name requirements:
+        <ul>
+            <li>10 through 20 characters in length</li>
+            <li>Only letters and digits</li>
+            <li>Cannot begin with a digit</li>
+        </ul>
+    </div>
+    <div class="signUpInstructions1">
+        Password requirements:
+        <ul>
+            <li>10 through 20 characters in length</li>
+            <li>Only letters, digits, and special characters</li>
+            <li>Must have one lower and upper case letter</li>
+            <li>Must have one digit</li>
+            <li>Must have one special character (@, #, $, %, ^, %, *)</li>
+        </ul>
+
+    </div>
+</div>
 <?php
 
 if((isset($_POST['userName'])&& $_POST['userName'] != '')
     &&(isset($_POST['passWord']) && $_POST['passWord'] != '')
     &&(isset($_POST['email']) && $_POST['email'] != '')){
     verifySignUp();
-} else {
-    signUpForm();
-}
+}// else {
+//    signUpForm();
+//}
 
 function verifySignUp(){
     print("function called");
@@ -177,6 +232,8 @@ print <<<FOOTER
 FOOTER;
 
 ?>
+<script type="text/javascript">
 
+</script>
 </body>
 </html>
