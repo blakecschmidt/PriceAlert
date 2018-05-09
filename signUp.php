@@ -103,9 +103,9 @@ function verifySignUp(){
     }
 
     $table_u = "User";
-    $username = $_POST['userName'];
-    $email = $_POST['email'];
-    $password = crypt($_POST['passWord']);
+    $username = mysqli_real_escape_string ($connect, $_POST['userName']);
+    $email = mysqli_real_escape_string ($connect, $_POST['email']);
+    $password = mysqli_real_escape_string ($connect, crypt($_POST['passWord']));
     $userValid = false;
     $userAlreadyExists = false;
     $passwordValid = false;
@@ -233,6 +233,31 @@ FOOTER;
 
 ?>
 <script type="text/javascript">
+var username = document.getElementById("userName");
+var password = document.getElementById("passWord");
+var repeatPassword = document.getElementById("repeatPassWord");
+var validLogin = true;
+var userRegEx = "/^[a-zA-Z]+[a-zA-Z0-9]*$/";
+var passRegEx = '/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,}))/';
+if (username.value.length < 10 || username.value.length > 20){
+    validLogin = false;
+}
+else if(!userRegEx.test(username.value)){
+    validLogin = false;
+}
+if (password.value.length < 10 || password.value.length > 20){
+    validLogin = false;
+}
+else if(!passRegEx.test(password)){
+    validLogin = false;
+}
+else if(password !== repeatPassword) {
+    validLogin = false;
+}
+
+if(validLogin===false){
+    window.alert("Error. Username or Password invalid.")
+}
 
 </script>
 </body>

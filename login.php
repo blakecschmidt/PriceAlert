@@ -79,8 +79,8 @@ function verifyLogin(){
 
     $table_u = "User";
 
-    $userName = $_POST['userName'];
-    $password = $_POST['passWord'];
+    $userName = mysqli_real_escape_string ($connect, $_POST['userName']);
+    $password = mysqli_real_escape_string ($connect, $_POST['passWord']);
     $stay = $_POST['stay'];
     $userDB = "none";
     $passDB = "none";
