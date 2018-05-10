@@ -117,7 +117,7 @@ function loginForm()
     print <<<loginForm
     <div class="wrapper">
     	<div class="logIn">
-			<form action = "" method = "post">
+			<form action = "login.php" method = "post">
 				<table>
 					<tr>
 						<td>User Name:</td>

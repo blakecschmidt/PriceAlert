@@ -283,7 +283,7 @@ function editForm()
     print <<<FORM
 <p>Please check a retailer box to indicate that you would like to edit the URL or add that listing. Changing the alert price will affect all listings. Checked boxes with blank URLs, blank alert price boxes and alert prices of zero will not be accepted.</p>
 
-<form class="editItemsTable" id = "editForm" method = "post" action = "">
+<form class="editItemsTable" id = "editForm" method = "post" action = "editItem.php">
 
 <table>
 

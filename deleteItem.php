@@ -175,7 +175,7 @@ function deleteForm()
     mysqli_close($connect);
 
     print <<<FORM
-<form id = "deleteForm" method = "post" action = "">
+<form id = "deleteForm" method = "post" action = "deleteItem.php">
 
 <table>
 

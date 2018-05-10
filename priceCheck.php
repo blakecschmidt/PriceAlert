@@ -8,7 +8,13 @@
 <body>
 
 <?php
-if (isset($_POST["check"]) && $_POST["check"] == "Yes") {
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if (isset($_POST["email"]) && $_POST["email"] == "Yes") {
+    email();
+} elseif (isset($_POST["price"]) && $_POST["price"] == "Yes") {
     price();
 } elseif (isset($_POST["check"]) && $_POST["check"] == "Yes") {
     priceCheck();
@@ -17,9 +23,25 @@ if (isset($_POST["check"]) && $_POST["check"] == "Yes") {
 function price() {
     $url = "https://www.amazon.com/Xbox-One-X-1TB-Console/dp/B074WPGYRF/ref=sr_1_3?s=videogames&ie=UTF8&qid=1525038636&sr=1-3&keywords=xbox%2Bone%2Bx&th=1";
     $retailer = "Amazon";
-    $getPriceArgs = $url . " " . $retailer;
-    $price = (float)system("python3 getPrice.py " . $getPriceArgs, $retval);
+    //$getPriceArgs = "'" . $url . "' '" . $retailer . "'";
+    //$price = system("/usr/local/bin/python3 /projects/coursework/2018-spring/cs329e-mitra/bcs2363/PriceAlert/getPrice.py '" . $url . "' '" . $retailer . "'", $retval);
+    //exec("/usr/local/bin/python3 /projects/coursework/2018-spring/cs329e-mitra/bcs2363/PriceAlert/getPrice.py", $output, $ret_code);
+    $price = system("/usr/local/bin/python3 /projects/coursework/2018-spring/cs329e-mitra/bcs2363/PriceAlert/getPrice.py", $retval);
     print "Price: " . $price;
+    print "Retval: " . $retval;
+}
+
+function email() {
+    $emailInfo = array();
+    $emailInfo[] = "Xbox";
+    $emailInfo[] = array("Amazon", "Dell", "Best Buy");
+    $emailInfo[] = array("400.00", "425.23", "500");
+    $emailInfo[] = array("https://www.amazon.com/Xbox-One-X-1TB-Console/dp/B074WPGYRF/ref=sr_1_3?s=videogames&ie=UTF8&qid=1524680613&sr=1-3&keywords=xbox+one+x", "url", "url");
+    $emailInfo[] = array("pricealertnotify@gmail.com", '3qKL^yoc*,Aq6ZmH$rDn', "smtp.gmail.com:587");
+    $emailInfo[] = "blakecschmidt@gmail.com";
+
+    $sendEmailArgs = $emailInfo[0] . " " . $emailInfo[1] . " " . $emailInfo[2] . " " . $emailInfo[3] . " " . $emailInfo[4] . " " . $emailInfo[5];
+    $sendEmail = system("python3 sendEmail.py " . $sendEmailArgs, $retval);
 }
 
 function priceCheck()
@@ -89,13 +111,19 @@ function priceCheck()
 
                 //Checked to here
 
-                $getPriceArgs = $url . " " . $retailer;
+                $json_array = array(
+                        "0" => array(
+                                "username"
+                        )
+                );
+
+                /*$getPriceArgs = $url . " " . $retailer;
                 $price = (float)system
                 ("python3 getPrice.py " . $getPriceArgs, $retval);
 
                 print "Price: " . $price . "<br>";
 
-                /*if ($currentPrice == NULL || $currentPrice == 0 || $price != $currentPrice) {
+                if ($currentPrice == NULL || $currentPrice == 0 || $price != $currentPrice) {
                     $stmt_price = mysqli_prepare($connect, "UPDATE itemToRetailer SET currentPrice = (?) WHERE itemID = (?)");
                     mysqli_stmt_bind_param($stmt_price, 'ds', $price, $id);
                     mysqli_stmt_execute($stmt_price);
@@ -125,7 +153,12 @@ print <<<FORM
 
 <form method = "post" action = "">
 <input type="hidden" name="price" id="price" value="Yes">
-<input type = "submit" value = "Check">
+<input type = "submit" value = "Price">
+</form>
+
+<form method = "post" action = "">
+<input type="hidden" name="email" id="email" value="Yes">
+<input type = "submit" value = "Email">
 </form>
 FORM;
 

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 
-def getPrice(url, site):
+'''def getPrice(url, site):
 
     r = requests.get(url, headers={
         'User-Agent':
@@ -51,8 +51,9 @@ def getPrice(url, site):
     else:
         price = None
 
-    print(price)
+    print(price)'''
 
 def main():
-    getPrice(sys.argv[1], sys.argv[2])
+    #getPrice(sys.argv[1], sys.argv[2])
+    print("Hi")
 main()

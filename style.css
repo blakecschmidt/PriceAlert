@@ -243,6 +243,13 @@ p.contact {
     position: absolute;
     top: 160px;
     margin: 0 auto;
+    height: auto;
+}
+
+.pageStrtSignup{
+    position: absolute;
+    top: 160px;
+    margin: 0 auto;
     width: 300px;
     height: auto;
     text-align: center;

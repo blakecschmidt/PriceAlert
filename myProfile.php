@@ -196,7 +196,7 @@ H1;
         print <<<INFO
         <div class = "myPersonalInfo">
         <h1>Personal Info</h1>
-                <form action = "" method = "post">
+                <form action = "myProfile.php" method = "post">
                     <table>
                         <tr>
                             <td><label for = "oldEmail">Current Email:</label></td>
@@ -218,7 +218,7 @@ H1;
         </div>
         <div class = "mySecurity" style="display:none">
         <h1>Security Info</h1>
-            <form action = "" method = "post">
+            <form action = "myProfile.php" method = "post">
                     <table>
                         <tr>
                             <td><label for = "oldPassword">Current Password:</label></td>

@@ -190,7 +190,7 @@ function insertForm()
 {
     print <<<FORM
 <div class="addItemsTable">
-<form id = "insertForm" method = "post" action = "">
+<form id = "insertForm" method = "post" action = "addItem.php">
 
     <table>
     
