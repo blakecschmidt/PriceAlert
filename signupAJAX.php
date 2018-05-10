@@ -9,18 +9,17 @@ $connect = mysqli_connect($host, $user, $pwd, $dbs, $port);
 
 $username = $_POST["username"];
 
-echo $username;
-
-/*$stmt = "SELECT username from User WHERE username = '" . $username . "'";
+$stmt = "SELECT username from User WHERE username = '" . $username . "'";
 $userDB = "none";
 $result = mysqli_query($connect, $stmt);
 
-$row = $result->fetch_row();
-$userDB = $row;
+while ($row = $result->fetch_row()) {
+    $userDB = $row[0];
+}
 mysqli_close($connect);
 
-if ($userDB == $username) {
-    echo "Username Taken";
-}*/
+if ($userDB != "none") {
+    echo "Username taken";
+}
 
 ?>

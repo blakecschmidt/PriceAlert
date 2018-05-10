@@ -186,9 +186,7 @@ FOOTER;
         }
 
         var url = "signupAJAX.php";
-        var params = {
-            "username": username
-        };
+        var params = "username=" + username;
 
         xhr.open("POST", url, true);
 
@@ -204,8 +202,9 @@ FOOTER;
     function updatePage() {
         if ((xhr.readyState == 4) && (xhr.status == 200)) {
             var response = xhr.responseText;
-            window.alert(response);
-            //window.alert("This username is already taken.");
+            if (response == "Username taken") {
+                window.alert("This username is already taken.");
+            }
         }
     }
 
