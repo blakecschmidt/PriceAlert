@@ -48,10 +48,10 @@
                     <td><label for = "repeatPassWord">Repeat Password:</label></td>
                 </tr>
                 <tr>
-                    <td><input type = "password" name = "repeatPassWord" id = "repeatPassWord"></td>
+                    <td><input onblur="validation()" type = "password" name = "repeatPassWord" id = "repeatPassWord"></td>
                 </tr>
                 <tr>
-                    <td><input onsubmit="validation()" id='submit' type = "submit" value = "Sign Up"><input type = "reset" value = "Reset"></td>
+                    <td><input id='submit' type = "submit" value = "Sign Up"><input type = "reset" value = "Reset"></td>
                 </tr>
             </table>
         </form>
