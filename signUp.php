@@ -30,7 +30,7 @@
                     <td><label for = "userName">User Name:</label></td>
                 </tr>
                 <tr>
-                    <td><input type = "text" name = "userName" id = "userName" maxlength = "20"></td>
+                    <td><input type = "text" name = "userName" id = "userName" maxlength = "20" onchange="callServer()"></td>
                 </tr>
                 <tr>
                     <td><label for = "email">Email:</label></td>
@@ -185,7 +185,7 @@ FOOTER;
             return;
         }
 
-        var url = "./userCheck.php";
+        var url = "signupAJAX.php";
         var params = {
             "username": username
         };
@@ -203,7 +203,9 @@ FOOTER;
 
     function updatePage() {
         if ((xhr.readyState == 4) && (xhr.status == 200)) {
-            window.alert("This username is already taken.");
+            var response = xhr.responseText;
+            window.alert(response);
+            //window.alert("This username is already taken.");
         }
     }
 
