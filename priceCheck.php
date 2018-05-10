@@ -90,7 +90,8 @@ function priceCheck()
                 //Checked to here
 
                 $getPriceArgs = $url . " " . $retailer;
-                $price = (float)system("python3 getPrice.py " . $getPriceArgs, $retval);
+                $price = (float)system
+                ("python3 getPrice.py " . $getPriceArgs, $retval);
 
                 print "Price: " . $price . "<br>";
 

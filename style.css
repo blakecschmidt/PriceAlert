@@ -243,7 +243,9 @@ p.contact {
     position: absolute;
     top: 160px;
     margin: 0 auto;
+    width: 300px;
     height: auto;
+    text-align: center;
 }
 
 .myItemStrt{
@@ -338,9 +340,10 @@ footer p {
 }
 
 .wrapper {
-  margin-left:auto;
-  margin-right:auto;
-  width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    width:80%;
+    height: 600px;
 }
 
 .logIn{
