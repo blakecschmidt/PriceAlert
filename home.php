@@ -153,7 +153,7 @@ VIDEO;
 
 	print <<<FOOTER
 </div>
-<footer>
+<footer class="footerHome">
     <div class="footer">
         <p>$date<br>Price Alert created by Blake Schmidt, Ben Luzarraga, and Kyle Gruber.</p>
     </div>
