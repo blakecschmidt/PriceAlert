@@ -138,7 +138,7 @@ START;
     <br>
     <div class="vidCon col-centered">
         <div class="video col-md-6">
-            <p>*The training video for how to get started with Price Alert would go here*</p>
+            <video controls="controls" width="600" height="300" name="Tutorial" src="TUT.mov"></video>
         </div>
         <div class="vidText col-md-4">
             <p>
