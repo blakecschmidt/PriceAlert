@@ -138,7 +138,7 @@ START;
     <br>
     <div class="vidCon col-centered">
         <div class="video col-md-6">
-            <video controls="controls" width="600" height="300" name="Tutorial" src="TUT.mov"></video>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/yWVNpaEVdIY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
         <div class="vidText col-md-4">
             <p>
